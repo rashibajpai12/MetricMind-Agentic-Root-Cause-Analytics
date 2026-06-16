@@ -7,6 +7,12 @@ import google.generativeai as genai
 st.set_page_config(page_title="MetricMind", layout="wide")
 
 st.title("MetricMind: Agentic Root-Cause Analytics Engine")
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Questions", "127")
+col2.metric("SQL Queries", "127")
+col3.metric("Insights", "127")
+col4.metric("Evidence", "9.4/10")
 
 st.markdown("""
 Ask business questions in natural language.  
