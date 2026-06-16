@@ -16,8 +16,8 @@ st.set_page_config(
 st.markdown("""
 <style>
 .stApp {
-    background: #0b0d0f;
-    color: #f5f5f5;
+    background: #0B0D0F;
+    color: #F5F5F5;
 }
 
 #MainMenu, footer, header {
@@ -25,103 +25,139 @@ st.markdown("""
 }
 
 .block-container {
-    max-width: 1250px;
-    padding-top: 1.5rem;
+    padding-top: 1.2rem;
+    max-width: 1200px;
 }
 
 [data-testid="stSidebar"] {
-    background: #111417;
-    border-right: 1px solid #25282c;
+    background: #111315;
+    border-right: 1px solid #25282C;
 }
 
-.card {
-    background: #151819;
-    border: 1px solid #2c3034;
-    border-radius: 24px;
-    padding: 24px;
-    min-height: 150px;
-}
-
-.hero {
-    background: linear-gradient(135deg, #151819 0%, #1a1624 55%, #cdbbff 220%);
-    border: 1px solid #2d3136;
-    border-radius: 30px;
-    padding: 42px;
-    margin-bottom: 22px;
-}
-
-.hero h1 {
-    font-size: 64px;
-    line-height: 0.95;
-    font-weight: 900;
-    margin: 0;
-    letter-spacing: -2px;
-}
-
-.hero p {
-    color: #bfc3c7;
-    font-size: 18px;
-    max-width: 720px;
-    margin-top: 18px;
-    line-height: 1.6;
-}
-
-.pill {
-    display: inline-block;
-    background: #d8c8ff;
-    color: #111;
-    padding: 9px 16px;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 14px;
+.sidebar-card {
+    background: #181A1D;
+    border: 1px solid #2B2E33;
+    border-radius: 22px;
+    padding: 18px;
     margin-bottom: 18px;
 }
 
-.metric-box {
-    background: #151819;
-    border: 1px solid #2c3034;
-    border-radius: 22px;
-    padding: 22px;
-    height: 145px;
+.sidebar-title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 6px;
 }
 
-.metric-box.highlight {
-    background: #d8c8ff;
+.sidebar-sub {
+    color: #A1A1AA;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.side-pill {
+    background: #0B0D0F;
+    border: 1px solid #2B2E33;
+    border-radius: 999px;
+    padding: 10px 13px;
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #17191D 0%, #1E1830 60%, #3A2D54 100%);
+    border: 1px solid #2E3138;
+    border-radius: 28px;
+    padding: 38px 42px;
+    margin-bottom: 22px;
+}
+
+.badge {
+    display: inline-block;
+    background: #D8C8FF;
+    color: #111;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    font-size: 60px;
+    font-weight: 950;
+    letter-spacing: -2px;
+    margin: 0;
+}
+
+.hero-desc {
+    color: #C8C8CE;
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 780px;
+    margin-top: 20px;
+}
+
+.metric-card {
+    background: #151819;
+    border: 1px solid #2B2E33;
+    border-radius: 22px;
+    padding: 22px;
+    height: 135px;
+}
+
+.metric-card-accent {
+    background: #D8C8FF;
     color: #111;
 }
 
-.metric-value {
-    font-size: 42px;
-    font-weight: 900;
-    margin-top: 28px;
-}
-
 .metric-label {
-    color: #a6abb0;
     font-size: 14px;
+    color: #A1A1AA;
 }
 
-.metric-box.highlight .metric-label {
-    color: #222;
+.metric-card-accent .metric-label {
+    color: #333;
 }
 
-.section-title {
-    font-size: 26px;
-    font-weight: 800;
-    margin: 18px 0;
+.metric-value {
+    font-size: 44px;
+    font-weight: 950;
+    margin-top: 24px;
 }
 
-.agent-card {
+.panel {
     background: #151819;
-    border: 1px solid #2c3034;
-    border-radius: 22px;
-    padding: 18px;
+    border: 1px solid #2B2E33;
+    border-radius: 24px;
+    padding: 22px;
+    min-height: 360px;
+}
+
+.panel-title {
+    font-size: 25px;
+    font-weight: 850;
     margin-bottom: 14px;
 }
 
-.agent-ok {
-    color: #d8c8ff;
-    font-weight: 800;
+.agent-row {
+    background: #0F1114;
+    border: 1px solid #2B2E33;
+    border-radius: 16px;
+    padding: 13px 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.dot {
+    color: #D8C8FF;
+    font-weight: 900;
+}
+
+.ask-title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-top: 28px;
+    margin-bottom: 12px;
 }
 
 .stTabs [data-baseweb="tab-list"] {
@@ -130,13 +166,9 @@ st.markdown("""
 
 .stTabs [data-baseweb="tab"] {
     background: #151819;
+    border: 1px solid #2B2E33;
     border-radius: 999px;
     padding: 10px 18px;
-    border: 1px solid #2c3034;
-}
-
-div[data-testid="stAlert"] {
-    border-radius: 18px;
 }
 
 [data-testid="stDataFrame"] {
@@ -144,9 +176,10 @@ div[data-testid="stAlert"] {
     overflow: hidden;
 }
 
-.stChatInputContainer {
-    border-radius: 20px !important;
+div[data-testid="stAlert"] {
+    border-radius: 16px;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -154,137 +187,25 @@ div[data-testid="stAlert"] {
 # Sidebar
 # =========================
 with st.sidebar:
-
     st.markdown("""
-    <style>
+    <div class="sidebar-title">📊 MetricMind</div>
+    <div class="sidebar-sub">AI-native analytics workspace</div>
 
-    .side-logo{
-        font-size:34px;
-        font-weight:900;
-        color:white;
-        margin-top:15px;
-        margin-bottom:10px;
-    }
-
-    .side-sub{
-        color:#A1A1AA;
-        font-size:15px;
-        margin-bottom:35px;
-    }
-
-    .side-card{
-        background:linear-gradient(
-            135deg,
-            rgba(139,92,246,0.10),
-            rgba(255,255,255,0.03)
-        );
-
-        border:1px solid rgba(255,255,255,0.08);
-
-        border-radius:24px;
-
-        padding:20px;
-
-        margin-bottom:22px;
-
-        backdrop-filter:blur(20px);
-    }
-
-    .side-card-title{
-        font-size:18px;
-        font-weight:700;
-        color:white;
-        margin-bottom:15px;
-    }
-
-    .question-pill{
-        background:#111827;
-
-        border:1px solid rgba(255,255,255,0.08);
-
-        border-radius:999px;
-
-        padding:12px;
-
-        margin-bottom:10px;
-
-        color:#E5E7EB;
-
-        font-size:14px;
-    }
-
-    .flow-step{
-        color:#D1D5DB;
-
-        padding:10px 0;
-
-        border-bottom:1px solid rgba(255,255,255,0.05);
-
-        font-size:15px;
-    }
-
-    .flow-step:last-child{
-        border-bottom:none;
-    }
-
-    </style>
-
-    <div class="side-logo">
-    📊 MetricMind
+    <div class="sidebar-card">
+        <b>Try Questions</b>
+        <div class="side-pill">Which category had the highest revenue decline?</div>
+        <div class="side-pill">Which region performed worst?</div>
+        <div class="side-pill">Show refund rates above 0.08</div>
+        <div class="side-pill">Largest revenue drop?</div>
     </div>
 
-    <div class="side-sub">
-    AI-native analytics workspace
+    <div class="sidebar-card">
+        <b>Agent Flow</b>
+        <div class="side-pill">Question → SQL Agent</div>
+        <div class="side-pill">DuckDB → Analytics</div>
+        <div class="side-pill">Insight → Verification</div>
+        <div class="side-pill">Report → Download</div>
     </div>
-
-    <div class="side-card">
-
-        <div class="side-card-title">
-        Try Questions
-        </div>
-
-        <div class="question-pill">
-        Which category had the highest revenue decline?
-        </div>
-
-        <div class="question-pill">
-        Which region performed worst?
-        </div>
-
-        <div class="question-pill">
-        Show refund rates above 0.08
-        </div>
-
-        <div class="question-pill">
-        Largest revenue drop?
-        </div>
-
-    </div>
-
-    <div class="side-card">
-
-        <div class="side-card-title">
-        Agent Flow
-        </div>
-
-        <div class="flow-step">
-        Question → SQL Agent
-        </div>
-
-        <div class="flow-step">
-        DuckDB → Analytics
-        </div>
-
-        <div class="flow-step">
-        Insight → Verification
-        </div>
-
-        <div class="flow-step">
-        Report → Download
-        </div>
-
-    </div>
-
     """, unsafe_allow_html=True)
 
 # =========================
@@ -312,24 +233,23 @@ else:
 # =========================
 st.markdown("""
 <div class="hero">
-    <div class="pill">AI Analytics Agent</div>
-    <h1>MetricMind</h1>
-    <p>
-    Ask business questions in natural language. MetricMind generates SQL,
-    runs analytics, detects failures, verifies evidence, and produces
-    decision-ready insights.
-    </p>
+    <div class="badge">AI Analytics Agent</div>
+    <div class="hero-title">MetricMind</div>
+    <div class="hero-desc">
+        Ask business questions in natural language. MetricMind generates SQL,
+        runs analytics, detects failures, verifies evidence, and produces decision-ready insights.
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # =========================
-# KPI Grid
+# KPI Cards
 # =========================
 k1, k2, k3, k4 = st.columns(4)
 
 with k1:
     st.markdown(f"""
-    <div class="metric-box highlight">
+    <div class="metric-card metric-card-accent">
         <div>Segments Analyzed ↗</div>
         <div class="metric-value">{len(root_cause)}</div>
         <div class="metric-label">available business segments</div>
@@ -338,7 +258,7 @@ with k1:
 
 with k2:
     st.markdown(f"""
-    <div class="metric-box">
+    <div class="metric-card">
         <div>Regions ↗</div>
         <div class="metric-value">{root_cause["region"].nunique()}</div>
         <div class="metric-label">regional dimensions</div>
@@ -347,7 +267,7 @@ with k2:
 
 with k3:
     st.markdown(f"""
-    <div class="metric-box">
+    <div class="metric-card">
         <div>Categories ↗</div>
         <div class="metric-value">{root_cause["category"].nunique()}</div>
         <div class="metric-label">product categories</div>
@@ -356,7 +276,7 @@ with k3:
 
 with k4:
     st.markdown("""
-    <div class="metric-box">
+    <div class="metric-card">
         <div>Evidence Score ↗</div>
         <div class="metric-value">9.4</div>
         <div class="metric-label">verified confidence</div>
@@ -364,12 +284,13 @@ with k4:
     """, unsafe_allow_html=True)
 
 # =========================
-# Dashboard Preview
+# Main Dashboard Panels
 # =========================
-left, right = st.columns([1.35, 1])
+left, right = st.columns([1.45, 1])
 
 with left:
-    st.markdown('<div class="section-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel">', unsafe_allow_html=True)
+    st.markdown('<div class="panel-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
 
     if {"category", "revenue_change", "region"}.issubset(root_cause.columns):
         fig_preview = px.bar(
@@ -382,26 +303,39 @@ with left:
         fig_preview.update_layout(
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font_color="#f5f5f5",
-            margin=dict(l=20, r=20, t=20, b=20),
-            height=330
+            font_color="#F5F5F5",
+            height=300,
+            margin=dict(l=10, r=10, t=10, b=10),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
         )
         st.plotly_chart(fig_preview, use_container_width=True)
 
+    st.markdown('</div>', unsafe_allow_html=True)
+
 with right:
-    st.markdown('<div class="section-title">Agent Status</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel">', unsafe_allow_html=True)
+    st.markdown('<div class="panel-title">Agent Status</div>', unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="agent-card"><span class="agent-ok">●</span> SQL Generation Agent Ready</div>
-    <div class="agent-card"><span class="agent-ok">●</span> DuckDB Execution Ready</div>
-    <div class="agent-card"><span class="agent-ok">●</span> Failure Detection Active</div>
-    <div class="agent-card"><span class="agent-ok">●</span> Evidence Verification Active</div>
+    <div class="agent-row"><span class="dot">●</span> SQL Generation Agent Ready</div>
+    <div class="agent-row"><span class="dot">●</span> DuckDB Execution Ready</div>
+    <div class="agent-row"><span class="dot">●</span> Failure Detection Active</div>
+    <div class="agent-row"><span class="dot">●</span> Evidence Verification Active</div>
+    <div class="agent-row"><span class="dot">●</span> Report Export Enabled</div>
     """, unsafe_allow_html=True)
 
+    st.markdown('</div>', unsafe_allow_html=True)
+
 # =========================
-# Chat Input
+# Ask Section
 # =========================
-st.markdown('<div class="section-title">Ask MetricMind</div>', unsafe_allow_html=True)
+st.markdown('<div class="ask-title">Ask MetricMind</div>', unsafe_allow_html=True)
 
 question = st.chat_input("Ask a business question...")
 
@@ -522,7 +456,7 @@ Give:
             fig.update_layout(
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font_color="#f5f5f5"
+                font_color="#F5F5F5"
             )
             st.plotly_chart(fig, use_container_width=True)
 
