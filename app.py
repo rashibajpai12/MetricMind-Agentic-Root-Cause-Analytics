@@ -5,6 +5,19 @@ import duckdb
 import google.generativeai as genai
 
 st.set_page_config(page_title="MetricMind", layout="wide")
+with st.sidebar:
+
+    st.title("MetricMind")
+
+    st.markdown("### Sample Questions")
+
+    st.write("• Which category had the highest revenue decline?")
+
+    st.write("• Which region performed worst?")
+
+    st.write("• Show refund rates above 0.08")
+
+    st.write("• Largest revenue drop?")
 
 st.title("MetricMind: Agentic Root-Cause Analytics Engine")
 col1, col2, col3, col4 = st.columns(4)
