@@ -38,7 +38,7 @@ Evidence Verification Agent
 Final Report
 
 
-- ## Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---------|------------|
@@ -57,7 +57,7 @@ Final Report
 - Which business segment caused the largest revenue drop?
 - Which category recovered revenue despite high refunds?
 
-- ## Results
+## Results
 
 MetricMind successfully converts natural-language business questions into executable SQL queries and generates evidence-backed business insights.
 
