@@ -8,6 +8,10 @@ st.set_page_config(page_title="MetricMind", layout="wide")
 with st.sidebar:
 
     st.title("MetricMind")
+    st.info("""
+Question → SQL Agent → DuckDB →
+Insight Agent → Verification Agent
+""")
 
     st.markdown("### Sample Questions")
 
