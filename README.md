@@ -21,7 +21,6 @@ MetricMind enables users to ask natural-language business questions and automati
 - 
 ## Architecture
 
-```text
 User Question
       ↓
 SQL Generation Agent
@@ -38,6 +37,18 @@ Evidence Verification Agent
       ↓
 Final Report
 
+
+- ## Tech Stack
+
+| Layer | Technology |
+|---------|------------|
+| Frontend | Streamlit |
+| Analytics Engine | DuckDB |
+| LLM | Gemini 2.5 Flash |
+| Data Processing | Pandas |
+| Visualization | Plotly |
+| Language | Python |
+
 ## Sample Questions
 
 - Which category had the highest revenue decline?
@@ -46,7 +57,7 @@ Final Report
 - Which business segment caused the largest revenue drop?
 - Which category recovered revenue despite high refunds?
 
-## Results
+- ## Results
 
 MetricMind successfully converts natural-language business questions into executable SQL queries and generates evidence-backed business insights.
 
@@ -59,11 +70,4 @@ Current capabilities include:
 - Evidence verification
 - Report export
 
-## Future Work
 
-- Multi-Agent Orchestration using LangGraph
-- Real-Time Database Connections
-- Multi-Table Analytics
-- Dashboard Auto-Generation
-- Forecasting and Anomaly Detection
-- MCP-Based Tool Integration
