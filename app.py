@@ -23,4 +23,24 @@ if st.button("Analyze"):
     st.subheader("Business Question")
     st.write(question)
 
-    st.subheader("Root Cause Results
+  st.subheader("Root Cause Results")
+
+root_cause = pd.read_csv(
+    "metricmind_root_cause_results.csv"
+)
+
+st.dataframe(
+    root_cause,
+    use_container_width=True
+)
+
+st.subheader("Final Verified Report")
+
+with open(
+    "metricmind_final_report.txt",
+    "r",
+    encoding="utf-8"
+) as f:
+    report = f.read()
+
+st.markdown(report)
