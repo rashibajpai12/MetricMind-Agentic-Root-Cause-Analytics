@@ -50,10 +50,10 @@ if api_key:
 else:
     model = None
 
-question = st.text_input(
-    "Ask a business question",
-    "Why did revenue drop?"
+question = st.chat_input(
+    "Ask MetricMind a business question..."
 )
+
 if st.button("Analyze"):
 
     st.subheader("1. User Question")
