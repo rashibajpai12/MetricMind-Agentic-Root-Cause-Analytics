@@ -24,7 +24,7 @@ con.register("sales", root_cause)
 # -----------------------------
 # Gemini API
 # -----------------------------
-api_key = st.secrets.get("GEMINI_API_KEY", "")
+api_key = "AIzaSyDwDb7nCq-ssr4XDPrK6R8xXDc53iOIfQE"
 
 if api_key:
     genai.configure(api_key=api_key)
