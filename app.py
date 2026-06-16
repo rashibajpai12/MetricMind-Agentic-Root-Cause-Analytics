@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import duckdb
 import google.generativeai as genai
 
@@ -69,8 +70,10 @@ Return only SQL, no explanation.
 
     sql_query = model.generate_content(sql_prompt).text.strip()
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
-
+    
+    st.subheader("Generated SQL")
     st.code(sql_query, language="sql")
+    
 
     st.subheader("3. Failure Detection Agent")
 
@@ -95,6 +98,17 @@ Return only SQL, no explanation.
 
     st.subheader("4. SQL Result")
     st.dataframe(result, use_container_width=True)
+    st.subheader("Revenue Impact Chart")
+
+fig = px.bar(
+    result,
+    x="category",
+    y="revenue_change",
+    color="region",
+    title="Revenue Change by Category"
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("5. Evidence Verification + Insight Agent")
 
@@ -125,7 +139,30 @@ Rules:
 
     insight = model.generate_content(insight_prompt).text
 
-    st.markdown(insight)
+st.markdown(insight)
+
+verification_prompt = f"""
+Check if the insight is supported by the SQL result.
+
+Insight:
+{insight}
+
+SQL Result:
+{result.to_string()}
+
+Give:
+1. Evidence Score out of 10
+2. Unsupported claims if any
+"""
+
+verification = model.generate_content(
+    verification_prompt
+).text
+
+st.subheader("Evidence Verification")
+st.write(verification)
+
+    
 
     st.download_button(
         label="Download Insight Report",
