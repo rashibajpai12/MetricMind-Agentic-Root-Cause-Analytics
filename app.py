@@ -24,9 +24,7 @@ con.register("sales", root_cause)
 # -----------------------------
 # Gemini API
 # -----------------------------
-import os
-
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = st.secrets["GEMINI_API_KEY"]
 
 if api_key:
     genai.configure(api_key=api_key)
