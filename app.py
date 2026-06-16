@@ -124,7 +124,7 @@ st.markdown("""
 .section-title {
     font-size: 25px;
     font-weight: 850;
-    margin-top: 45px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 
