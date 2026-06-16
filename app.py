@@ -6,7 +6,6 @@ import google.generativeai as genai
 
 st.set_page_config(
     page_title="MetricMind",
-    page_icon="📊",
     layout="wide"
 )
 
@@ -125,8 +124,8 @@ st.markdown("""
 .section-title {
     font-size: 25px;
     font-weight: 850;
-    margin-top: 24px;
-    margin-bottom: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .agent-row {
@@ -167,7 +166,7 @@ div[data-testid="stAlert"] {
 
 with st.sidebar:
     st.markdown("""
-    <div class="sidebar-title">📊 MetricMind</div>
+    <div class="sidebar-title"> MetricMind</div>
     <div class="sidebar-sub">AI-native analytics workspace</div>
 
     <div class="sidebar-card">
