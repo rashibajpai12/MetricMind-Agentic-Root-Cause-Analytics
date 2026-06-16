@@ -31,10 +31,6 @@ question = st.text_input(
     "Ask a business question",
     "Why did revenue drop?"
 )
-question = st.text_input(
-    "Ask a business question",
-    "Why did revenue drop?"
-)
 if st.button("Analyze"):
 
     st.subheader("1. User Question")
