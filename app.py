@@ -8,7 +8,7 @@ st.set_page_config(page_title="MetricMind", layout="wide")
 st.title("MetricMind: Agentic Root-Cause Analytics Engine")
 
 st.markdown("""
-Ask business questions in natural language.  
+Ask business questions in natural language. 
 MetricMind generates SQL, runs analysis, detects failures, and produces evidence-backed insights.
 """)
 
