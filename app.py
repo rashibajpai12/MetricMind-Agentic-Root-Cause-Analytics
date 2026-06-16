@@ -10,9 +10,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# =========================
-# CSS
-# =========================
 st.markdown("""
 <style>
 .stApp {
@@ -26,20 +23,12 @@ st.markdown("""
 
 .block-container {
     padding-top: 1.2rem;
-    max-width: 1200px;
+    max-width: 1180px;
 }
 
 [data-testid="stSidebar"] {
     background: #111315;
     border-right: 1px solid #25282C;
-}
-
-.sidebar-card {
-    background: #181A1D;
-    border: 1px solid #2B2E33;
-    border-radius: 22px;
-    padding: 18px;
-    margin-bottom: 18px;
 }
 
 .sidebar-title {
@@ -52,6 +41,14 @@ st.markdown("""
     color: #A1A1AA;
     font-size: 14px;
     margin-bottom: 25px;
+}
+
+.sidebar-card {
+    background: #181A1D;
+    border: 1px solid #2B2E33;
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 18px;
 }
 
 .side-pill {
@@ -125,22 +122,15 @@ st.markdown("""
     margin-top: 24px;
 }
 
-.panel {
-    background: #151819;
-    border: 1px solid #2B2E33;
-    border-radius: 24px;
-    padding: 22px;
-    min-height: 360px;
-}
-
-.panel-title {
+.section-title {
     font-size: 25px;
     font-weight: 850;
+    margin-top: 24px;
     margin-bottom: 14px;
 }
 
 .agent-row {
-    background: #0F1114;
+    background: #151819;
     border: 1px solid #2B2E33;
     border-radius: 16px;
     padding: 13px 15px;
@@ -151,13 +141,6 @@ st.markdown("""
 .dot {
     color: #D8C8FF;
     font-weight: 900;
-}
-
-.ask-title {
-    font-size: 30px;
-    font-weight: 900;
-    margin-top: 28px;
-    margin-bottom: 12px;
 }
 
 .stTabs [data-baseweb="tab-list"] {
@@ -179,13 +162,9 @@ st.markdown("""
 div[data-testid="stAlert"] {
     border-radius: 16px;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
-# =========================
-# Sidebar
-# =========================
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-title">📊 MetricMind</div>
@@ -208,18 +187,12 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# =========================
-# Load Data
-# =========================
 root_cause = pd.read_csv("metricmind_root_cause_results.csv")
 revenue = pd.read_csv("metricmind_monthly_revenue.csv")
 
 con = duckdb.connect()
 con.register("sales", root_cause)
 
-# =========================
-# Gemini API
-# =========================
 api_key = st.secrets["GEMINI_API_KEY"]
 
 if api_key:
@@ -228,9 +201,6 @@ if api_key:
 else:
     model = None
 
-# =========================
-# Hero
-# =========================
 st.markdown("""
 <div class="hero">
     <div class="badge">AI Analytics Agent</div>
@@ -242,9 +212,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# =========================
-# KPI Cards
-# =========================
 k1, k2, k3, k4 = st.columns(4)
 
 with k1:
@@ -283,14 +250,10 @@ with k4:
     </div>
     """, unsafe_allow_html=True)
 
-# =========================
-# Main Dashboard Panels
-# =========================
-left, right = st.columns([1.45, 1])
+left, right = st.columns([1.45, 1], gap="large")
 
 with left:
-    st.markdown('<div class="panel">', unsafe_allow_html=True)
-    st.markdown('<div class="panel-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
 
     if {"category", "revenue_change", "region"}.issubset(root_cause.columns):
         fig_preview = px.bar(
@@ -302,26 +265,16 @@ with left:
         )
         fig_preview.update_layout(
             paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="#151819",
             font_color="#F5F5F5",
-            height=300,
+            height=340,
             margin=dict(l=10, r=10, t=10, b=10),
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=1.02,
-                xanchor="right",
-                x=1
-            )
+            legend=dict(orientation="h", y=1.08, x=1, xanchor="right")
         )
         st.plotly_chart(fig_preview, use_container_width=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
 with right:
-    st.markdown('<div class="panel">', unsafe_allow_html=True)
-    st.markdown('<div class="panel-title">Agent Status</div>', unsafe_allow_html=True)
-
+    st.markdown('<div class="section-title">Agent Status</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="agent-row"><span class="dot">●</span> SQL Generation Agent Ready</div>
     <div class="agent-row"><span class="dot">●</span> DuckDB Execution Ready</div>
@@ -330,20 +283,11 @@ with right:
     <div class="agent-row"><span class="dot">●</span> Report Export Enabled</div>
     """, unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# =========================
-# Ask Section
-# =========================
-st.markdown('<div class="ask-title">Ask MetricMind</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-title">Ask MetricMind</div>', unsafe_allow_html=True)
 
 question = st.chat_input("Ask a business question...")
 
-# =========================
-# Agent Execution
-# =========================
 if question:
-
     st.markdown("## Analysis Workspace")
     st.markdown(f"**Question:** {question}")
 
@@ -455,7 +399,7 @@ Give:
             )
             fig.update_layout(
                 paper_bgcolor="rgba(0,0,0,0)",
-                plot_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="#151819",
                 font_color="#F5F5F5"
             )
             st.plotly_chart(fig, use_container_width=True)
