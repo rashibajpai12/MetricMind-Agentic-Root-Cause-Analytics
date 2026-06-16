@@ -10,170 +10,183 @@ st.set_page_config(
     layout="wide"
 )
 
+# =========================
+# CSS
+# =========================
 st.markdown("""
 <style>
-.stApp{
-    background:#070B14;
-    color:white;
+.stApp {
+    background: #0b0d0f;
+    color: #f5f5f5;
 }
-.stApp:before{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:#8B5CF6;
-    top:-250px;
-    left:-150px;
-    border-radius:50%;
-    filter:blur(180px);
-    opacity:0.18;
-    z-index:-1;
+
+#MainMenu, footer, header {
+    visibility: hidden;
 }
-.stApp:after{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:#6D28D9;
-    bottom:-250px;
-    right:-150px;
-    border-radius:50%;
-    filter:blur(180px);
-    opacity:0.15;
-    z-index:-1;
+
+.block-container {
+    max-width: 1250px;
+    padding-top: 1.5rem;
 }
-#MainMenu, footer, header{
-    visibility:hidden;
+
+[data-testid="stSidebar"] {
+    background: #111417;
+    border-right: 1px solid #25282c;
 }
-.hero{
-    padding:50px;
-    border-radius:30px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(139,92,246,0.10));
-    backdrop-filter:blur(30px);
-    border:1px solid rgba(255,255,255,0.08);
-    margin-bottom:35px;
+
+.card {
+    background: #151819;
+    border: 1px solid #2c3034;
+    border-radius: 24px;
+    padding: 24px;
+    min-height: 150px;
 }
-.hero-title{
-    font-size:72px;
-    font-weight:800;
-    line-height:1;
-    color:white;
+
+.hero {
+    background: linear-gradient(135deg, #151819 0%, #1a1624 55%, #cdbbff 220%);
+    border: 1px solid #2d3136;
+    border-radius: 30px;
+    padding: 42px;
+    margin-bottom: 22px;
 }
-.hero-sub{
-    font-size:28px;
-    font-weight:600;
-    color:#C4B5FD;
-    margin-top:10px;
+
+.hero h1 {
+    font-size: 64px;
+    line-height: 0.95;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -2px;
 }
-.hero-desc{
-    font-size:18px;
-    color:#D1D5DB;
-    max-width:760px;
-    margin-top:25px;
+
+.hero p {
+    color: #bfc3c7;
+    font-size: 18px;
+    max-width: 720px;
+    margin-top: 18px;
+    line-height: 1.6;
 }
-.metric-card{
-    background:#111827;
-    padding:30px;
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,0.08);
-    text-align:center;
-    margin-bottom:25px;
+
+.pill {
+    display: inline-block;
+    background: #d8c8ff;
+    color: #111;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 18px;
 }
-.metric-number{
-    font-size:52px;
-    font-weight:800;
-    color:#A78BFA;
+
+.metric-box {
+    background: #151819;
+    border: 1px solid #2c3034;
+    border-radius: 22px;
+    padding: 22px;
+    height: 145px;
 }
-.metric-label{
-    font-size:15px;
-    color:#9CA3AF;
+
+.metric-box.highlight {
+    background: #d8c8ff;
+    color: #111;
 }
-.section-title{
-    font-size:38px;
-    font-weight:700;
-    margin-top:20px;
-    margin-bottom:20px;
+
+.metric-value {
+    font-size: 42px;
+    font-weight: 900;
+    margin-top: 28px;
 }
-[data-testid="stSidebar"]{
-    background:#0D1320;
+
+.metric-label {
+    color: #a6abb0;
+    font-size: 14px;
 }
-[data-testid="stChatInput"]{
-    border-radius:20px;
+
+.metric-box.highlight .metric-label {
+    color: #222;
 }
-[data-testid="stDataFrame"]{
-    border-radius:20px;
-    overflow:hidden;
+
+.section-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 18px 0;
+}
+
+.agent-card {
+    background: #151819;
+    border: 1px solid #2c3034;
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 14px;
+}
+
+.agent-ok {
+    color: #d8c8ff;
+    font-weight: 800;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: #151819;
+    border-radius: 999px;
+    padding: 10px 18px;
+    border: 1px solid #2c3034;
+}
+
+div[data-testid="stAlert"] {
+    border-radius: 18px;
+}
+
+[data-testid="stDataFrame"] {
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.stChatInputContainer {
+    border-radius: 20px !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
+# =========================
+# Sidebar
+# =========================
 with st.sidebar:
-    st.title("MetricMind")
-    st.info("""
-Question → SQL Agent → DuckDB  
-Insight Agent → Verification Agent
-""")
-    st.markdown("### Sample Questions")
-    st.write("• Which category had the highest revenue decline?")
-    st.write("• Which region performed worst?")
-    st.write("• Show refund rates above 0.08")
-    st.write("• Largest revenue drop?")
+    st.markdown("## 📊 MetricMind")
+    st.markdown("AI-native analytics workspace")
 
+    st.markdown("---")
+    st.markdown("### Try Questions")
+    st.markdown("""
+- Which category had the highest revenue decline?
+- Which region performed worst?
+- Show refund rates above 0.08
+- Largest revenue drop?
+""")
+
+    st.markdown("---")
+    st.markdown("### Agent Flow")
+    st.markdown("""
+**Question** → SQL Agent  
+**DuckDB** → Analytics  
+**Insight** → Verification  
+**Report** → Download  
+""")
+
+# =========================
+# Load Data
+# =========================
 root_cause = pd.read_csv("metricmind_root_cause_results.csv")
 revenue = pd.read_csv("metricmind_monthly_revenue.csv")
-
-st.markdown("""
-<div class="hero">
-    <div class="hero-title">MetricMind</div>
-    <div class="hero-sub">Agentic Root-Cause Analytics Engine</div>
-    <div class="hero-desc">
-        Transform business questions into executable SQL, run automated analytics,
-        verify evidence, and generate trusted AI insights through a multi-agent workflow.
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-m1, m2, m3, m4 = st.columns(4)
-
-with m1:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-number">{len(root_cause)}</div>
-        <div class="metric-label">Segments Analyzed</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with m2:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-number">{root_cause['region'].nunique()}</div>
-        <div class="metric-label">Regions</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with m3:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-number">{root_cause['category'].nunique()}</div>
-        <div class="metric-label">Categories</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with m4:
-    st.markdown("""
-    <div class="metric-card">
-        <div class="metric-number">9.4</div>
-        <div class="metric-label">Evidence Score</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
-<div class="section-title">Ask MetricMind</div>
-""", unsafe_allow_html=True)
 
 con = duckdb.connect()
 con.register("sales", root_cause)
 
+# =========================
+# Gemini API
+# =========================
 api_key = st.secrets["GEMINI_API_KEY"]
 
 if api_key:
@@ -182,13 +195,111 @@ if api_key:
 else:
     model = None
 
-question = st.chat_input("Ask MetricMind a business question...")
+# =========================
+# Hero
+# =========================
+st.markdown("""
+<div class="hero">
+    <div class="pill">AI Analytics Agent</div>
+    <h1>MetricMind</h1>
+    <p>
+    Ask business questions in natural language. MetricMind generates SQL,
+    runs analytics, detects failures, verifies evidence, and produces
+    decision-ready insights.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
+# =========================
+# KPI Grid
+# =========================
+k1, k2, k3, k4 = st.columns(4)
+
+with k1:
+    st.markdown(f"""
+    <div class="metric-box highlight">
+        <div>Segments Analyzed ↗</div>
+        <div class="metric-value">{len(root_cause)}</div>
+        <div class="metric-label">available business segments</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with k2:
+    st.markdown(f"""
+    <div class="metric-box">
+        <div>Regions ↗</div>
+        <div class="metric-value">{root_cause["region"].nunique()}</div>
+        <div class="metric-label">regional dimensions</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with k3:
+    st.markdown(f"""
+    <div class="metric-box">
+        <div>Categories ↗</div>
+        <div class="metric-value">{root_cause["category"].nunique()}</div>
+        <div class="metric-label">product categories</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with k4:
+    st.markdown("""
+    <div class="metric-box">
+        <div>Evidence Score ↗</div>
+        <div class="metric-value">9.4</div>
+        <div class="metric-label">verified confidence</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# =========================
+# Dashboard Preview
+# =========================
+left, right = st.columns([1.35, 1])
+
+with left:
+    st.markdown('<div class="section-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
+
+    if {"category", "revenue_change", "region"}.issubset(root_cause.columns):
+        fig_preview = px.bar(
+            root_cause,
+            x="category",
+            y="revenue_change",
+            color="region",
+            title=None
+        )
+        fig_preview.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font_color="#f5f5f5",
+            margin=dict(l=20, r=20, t=20, b=20),
+            height=330
+        )
+        st.plotly_chart(fig_preview, use_container_width=True)
+
+with right:
+    st.markdown('<div class="section-title">Agent Status</div>', unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="agent-card"><span class="agent-ok">●</span> SQL Generation Agent Ready</div>
+    <div class="agent-card"><span class="agent-ok">●</span> DuckDB Execution Ready</div>
+    <div class="agent-card"><span class="agent-ok">●</span> Failure Detection Active</div>
+    <div class="agent-card"><span class="agent-ok">●</span> Evidence Verification Active</div>
+    """, unsafe_allow_html=True)
+
+# =========================
+# Chat Input
+# =========================
+st.markdown('<div class="section-title">Ask MetricMind</div>', unsafe_allow_html=True)
+
+question = st.chat_input("Ask a business question...")
+
+# =========================
+# Agent Execution
+# =========================
 if question:
-    st.subheader("1. User Question")
-    st.write(question)
 
-    st.subheader("2. SQL Generation Agent")
+    st.markdown("## Analysis Workspace")
+    st.markdown(f"**Question:** {question}")
 
     if model is None:
         st.error("Gemini API key is missing. Add GEMINI_API_KEY in Streamlit secrets.")
@@ -277,9 +388,9 @@ Give:
 
     tab1, tab2, tab3, tab4 = st.tabs([
         "Generated SQL",
-        "Analytics Result",
+        "Query Result",
         "AI Insight",
-        "Evidence Verification"
+        "Evidence Check"
     ])
 
     with tab1:
@@ -295,6 +406,11 @@ Give:
                 y="revenue_change",
                 color="region",
                 title="Revenue Change by Category"
+            )
+            fig.update_layout(
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font_color="#f5f5f5"
             )
             st.plotly_chart(fig, use_container_width=True)
 
