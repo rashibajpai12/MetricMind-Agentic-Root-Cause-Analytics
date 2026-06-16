@@ -4,40 +4,172 @@ import plotly.express as px
 import duckdb
 import google.generativeai as genai
 
-st.set_page_config(page_title="MetricMind", layout="wide")
-with st.sidebar:
-
-    st.title("MetricMind")
-    st.info("""
-Question → SQL Agent → DuckDB →
-Insight Agent → Verification Agent
-""")
-
-    st.markdown("### Sample Questions")
-
-    st.write("• Which category had the highest revenue decline?")
-
-    st.write("• Which region performed worst?")
-
-    st.write("• Show refund rates above 0.08")
-
-    st.write("• Largest revenue drop?")
-
-st.title("MetricMind: Agentic Root-Cause Analytics Engine")
-col1, col2, col3, col4 = st.columns(4)
-
-col1.metric("Questions", "127")
-col2.metric("SQL Queries", "127")
-col3.metric("Insights", "127")
-col4.metric("Evidence", "9.4/10")
+st.set_page_config(
+    page_title="MetricMind",
+    page_icon="📊",
+    layout="wide"
+)
 
 st.markdown("""
-Ask business questions in natural language.  
-MetricMind generates SQL, runs analysis, detects failures, and produces evidence-backed insights.
+<style>
+.stApp{
+    background:#070B14;
+    color:white;
+}
+.stApp:before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:#8B5CF6;
+    top:-250px;
+    left:-150px;
+    border-radius:50%;
+    filter:blur(180px);
+    opacity:0.18;
+    z-index:-1;
+}
+.stApp:after{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:#6D28D9;
+    bottom:-250px;
+    right:-150px;
+    border-radius:50%;
+    filter:blur(180px);
+    opacity:0.15;
+    z-index:-1;
+}
+#MainMenu, footer, header{
+    visibility:hidden;
+}
+.hero{
+    padding:50px;
+    border-radius:30px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(139,92,246,0.10));
+    backdrop-filter:blur(30px);
+    border:1px solid rgba(255,255,255,0.08);
+    margin-bottom:35px;
+}
+.hero-title{
+    font-size:72px;
+    font-weight:800;
+    line-height:1;
+    color:white;
+}
+.hero-sub{
+    font-size:28px;
+    font-weight:600;
+    color:#C4B5FD;
+    margin-top:10px;
+}
+.hero-desc{
+    font-size:18px;
+    color:#D1D5DB;
+    max-width:760px;
+    margin-top:25px;
+}
+.metric-card{
+    background:#111827;
+    padding:30px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,0.08);
+    text-align:center;
+    margin-bottom:25px;
+}
+.metric-number{
+    font-size:52px;
+    font-weight:800;
+    color:#A78BFA;
+}
+.metric-label{
+    font-size:15px;
+    color:#9CA3AF;
+}
+.section-title{
+    font-size:38px;
+    font-weight:700;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+[data-testid="stSidebar"]{
+    background:#0D1320;
+}
+[data-testid="stChatInput"]{
+    border-radius:20px;
+}
+[data-testid="stDataFrame"]{
+    border-radius:20px;
+    overflow:hidden;
+}
+</style>
+""", unsafe_allow_html=True)
+
+with st.sidebar:
+    st.title("MetricMind")
+    st.info("""
+Question → SQL Agent → DuckDB  
+Insight Agent → Verification Agent
 """)
+    st.markdown("### Sample Questions")
+    st.write("• Which category had the highest revenue decline?")
+    st.write("• Which region performed worst?")
+    st.write("• Show refund rates above 0.08")
+    st.write("• Largest revenue drop?")
 
 root_cause = pd.read_csv("metricmind_root_cause_results.csv")
 revenue = pd.read_csv("metricmind_monthly_revenue.csv")
+
+st.markdown("""
+<div class="hero">
+    <div class="hero-title">MetricMind</div>
+    <div class="hero-sub">Agentic Root-Cause Analytics Engine</div>
+    <div class="hero-desc">
+        Transform business questions into executable SQL, run automated analytics,
+        verify evidence, and generate trusted AI insights through a multi-agent workflow.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+m1, m2, m3, m4 = st.columns(4)
+
+with m1:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-number">{len(root_cause)}</div>
+        <div class="metric-label">Segments Analyzed</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m2:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-number">{root_cause['region'].nunique()}</div>
+        <div class="metric-label">Regions</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m3:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-number">{root_cause['category'].nunique()}</div>
+        <div class="metric-label">Categories</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m4:
+    st.markdown("""
+    <div class="metric-card">
+        <div class="metric-number">9.4</div>
+        <div class="metric-label">Evidence Score</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
+<div class="section-title">Ask MetricMind</div>
+""", unsafe_allow_html=True)
 
 con = duckdb.connect()
 con.register("sales", root_cause)
@@ -50,12 +182,9 @@ if api_key:
 else:
     model = None
 
-question = st.chat_input(
-    "Ask MetricMind a business question..."
-)
+question = st.chat_input("Ask MetricMind a business question...")
 
 if question:
-
     st.subheader("1. User Question")
     st.write(question)
 
@@ -84,11 +213,6 @@ Return only SQL, no explanation.
     sql_query = model.generate_content(sql_prompt).text.strip()
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
-    st.subheader("Generated SQL")
-    st.code(sql_query, language="sql")
-
-    st.subheader("3. Failure Detection Agent")
-
     blocked_words = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
 
     if any(word in sql_query.upper() for word in blocked_words):
@@ -107,24 +231,6 @@ Return only SQL, no explanation.
         st.stop()
 
     st.success("SQL executed successfully.")
-
-    st.subheader("4. SQL Result")
-    st.dataframe(result, use_container_width=True)
-
-    if {"category", "revenue_change", "region"}.issubset(result.columns):
-        st.subheader("Revenue Impact Chart")
-
-        fig = px.bar(
-            result,
-            x="category",
-            y="revenue_change",
-            color="region",
-            title="Revenue Change by Category"
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-    st.subheader("5. Evidence Verification + Insight Agent")
 
     insight_prompt = f"""
 You are MetricMind, an evidence-backed analytics agent.
@@ -152,7 +258,6 @@ Rules:
 """
 
     insight = model.generate_content(insight_prompt).text
-    st.markdown(insight)
 
     verification_prompt = f"""
 Check if the insight is supported by the SQL result.
@@ -170,8 +275,34 @@ Give:
 
     verification = model.generate_content(verification_prompt).text
 
-    st.subheader("Evidence Verification")
-    st.write(verification)
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "Generated SQL",
+        "Analytics Result",
+        "AI Insight",
+        "Evidence Verification"
+    ])
+
+    with tab1:
+        st.code(sql_query, language="sql")
+
+    with tab2:
+        st.dataframe(result, use_container_width=True)
+
+        if {"category", "revenue_change", "region"}.issubset(result.columns):
+            fig = px.bar(
+                result,
+                x="category",
+                y="revenue_change",
+                color="region",
+                title="Revenue Change by Category"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+    with tab3:
+        st.markdown(insight)
+
+    with tab4:
+        st.write(verification)
 
     st.download_button(
         label="Download Insight Report",
