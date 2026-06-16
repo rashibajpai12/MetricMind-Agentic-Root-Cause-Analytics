@@ -124,8 +124,8 @@ st.markdown("""
 .section-title {
     font-size: 25px;
     font-weight: 850;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 35px;
+    margin-bottom: 20px;
 }
 
 .agent-row {
