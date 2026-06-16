@@ -54,7 +54,7 @@ question = st.chat_input(
     "Ask MetricMind a business question..."
 )
 
-if st.button("Analyze"):
+if question:
 
     st.subheader("1. User Question")
     st.write(question)
