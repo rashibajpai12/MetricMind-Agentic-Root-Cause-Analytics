@@ -9,22 +9,16 @@ st.set_page_config(page_title="MetricMind", layout="wide")
 st.title("MetricMind: Agentic Root-Cause Analytics Engine")
 
 st.markdown("""
-Ask business questions in natural language. 
+Ask business questions in natural language.  
 MetricMind generates SQL, runs analysis, detects failures, and produces evidence-backed insights.
 """)
 
-# -----------------------------
-# Load Data
-# -----------------------------
 root_cause = pd.read_csv("metricmind_root_cause_results.csv")
 revenue = pd.read_csv("metricmind_monthly_revenue.csv")
 
 con = duckdb.connect()
 con.register("sales", root_cause)
 
-# -----------------------------
-# Gemini API
-# -----------------------------
 api_key = st.secrets["GEMINI_API_KEY"]
 
 if api_key:
@@ -33,9 +27,6 @@ if api_key:
 else:
     model = None
 
-# -----------------------------
-# User Input
-# -----------------------------
 question = st.text_input(
     "Ask a business question",
     "Why did revenue drop?"
@@ -70,10 +61,9 @@ Return only SQL, no explanation.
 
     sql_query = model.generate_content(sql_prompt).text.strip()
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
-    
+
     st.subheader("Generated SQL")
     st.code(sql_query, language="sql")
-    
 
     st.subheader("3. Failure Detection Agent")
 
@@ -98,17 +88,19 @@ Return only SQL, no explanation.
 
     st.subheader("4. SQL Result")
     st.dataframe(result, use_container_width=True)
-    st.subheader("Revenue Impact Chart")
 
-fig = px.bar(
-    result,
-    x="category",
-    y="revenue_change",
-    color="region",
-    title="Revenue Change by Category"
-)
+    if {"category", "revenue_change", "region"}.issubset(result.columns):
+        st.subheader("Revenue Impact Chart")
 
-st.plotly_chart(fig, use_container_width=True)
+        fig = px.bar(
+            result,
+            x="category",
+            y="revenue_change",
+            color="region",
+            title="Revenue Change by Category"
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("5. Evidence Verification + Insight Agent")
 
@@ -138,10 +130,9 @@ Rules:
 """
 
     insight = model.generate_content(insight_prompt).text
+    st.markdown(insight)
 
-st.markdown(insight)
-
-verification_prompt = f"""
+    verification_prompt = f"""
 Check if the insight is supported by the SQL result.
 
 Insight:
@@ -155,14 +146,10 @@ Give:
 2. Unsupported claims if any
 """
 
-verification = model.generate_content(
-    verification_prompt
-).text
+    verification = model.generate_content(verification_prompt).text
 
-st.subheader("Evidence Verification")
-st.write(verification)
-
-    
+    st.subheader("Evidence Verification")
+    st.write(verification)
 
     st.download_button(
         label="Download Insight Report",
