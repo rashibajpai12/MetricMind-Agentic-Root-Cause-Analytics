@@ -1,23 +1,36 @@
 import streamlit as st
 import pandas as pd
+import duckdb
+import google.generativeai as genai
 
-# -----------------------------
-# Page Config
-# -----------------------------
-st.set_page_config(
-    page_title="MetricMind",
-    layout="wide"
-)
+st.set_page_config(page_title="MetricMind", layout="wide")
 
-# -----------------------------
-# Header
-# -----------------------------
 st.title("MetricMind: Agentic Root-Cause Analytics Engine")
 
 st.markdown("""
-Analyze business metric changes using
-root-cause analytics and AI-generated insights.
+Ask business questions in natural language.  
+MetricMind generates SQL, runs analysis, detects failures, and produces evidence-backed insights.
 """)
+
+# -----------------------------
+# Load Data
+# -----------------------------
+root_cause = pd.read_csv("metricmind_root_cause_results.csv")
+revenue = pd.read_csv("metricmind_monthly_revenue.csv")
+
+con = duckdb.connect()
+con.register("sales", root_cause)
+
+# -----------------------------
+# Gemini API
+# -----------------------------
+api_key = st.secrets.get("GEMINI_API_KEY", "")
+
+if api_key:
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash")
+else:
+    model = None
 
 # -----------------------------
 # User Input
@@ -27,62 +40,96 @@ question = st.text_input(
     "Why did revenue drop?"
 )
 
-# -----------------------------
-# Analyze Button
-# -----------------------------
 if st.button("Analyze"):
 
-    st.subheader("Business Question")
+    st.subheader("1. User Question")
     st.write(question)
 
-    # -------------------------
-    # Root Cause Results
-    # -------------------------
-    st.subheader("Root Cause Results")
+    st.subheader("2. SQL Generation Agent")
 
-    root_cause = pd.read_csv(
-        "metricmind_root_cause_results.csv"
-    )
+    if model is None:
+        st.error("Gemini API key is missing. Add GEMINI_API_KEY in Streamlit secrets.")
+        st.stop()
 
-    st.dataframe(
-        root_cause,
-        use_container_width=True
-    )
+    sql_prompt = f"""
+You are a SQL generation agent.
 
-    # -------------------------
-    # Revenue Trend Data
-    # -------------------------
-    st.subheader("Revenue Trend Data")
+Table name: sales
 
-    revenue = pd.read_csv(
-        "metricmind_monthly_revenue.csv"
-    )
+Columns:
+{list(root_cause.columns)}
 
-    st.dataframe(
-        revenue,
-        use_container_width=True
-    )
+User question:
+{question}
 
-    # -------------------------
-    # Final Report
-    # -------------------------
-    st.subheader("Final Verified Report")
+Generate one safe DuckDB SQL query only.
+Do not use DROP, DELETE, UPDATE, INSERT, ALTER.
+Return only SQL, no explanation.
+"""
 
-    with open(
-        "metricmind_final_report.txt",
-        "r",
-        encoding="utf-8"
-    ) as f:
-        report = f.read()
+    sql_query = model.generate_content(sql_prompt).text.strip()
+    sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
-    st.markdown(report)
+    st.code(sql_query, language="sql")
 
-    # -------------------------
-    # Download Report
-    # -------------------------
+    st.subheader("3. Failure Detection Agent")
+
+    blocked_words = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
+
+    if any(word in sql_query.upper() for word in blocked_words):
+        st.error("Unsafe SQL detected. Query blocked.")
+        st.stop()
+
+    try:
+        result = con.execute(sql_query).fetchdf()
+    except Exception as e:
+        st.error("SQL execution failed.")
+        st.write(e)
+        st.stop()
+
+    if result.empty:
+        st.warning("No matching data found for this question.")
+        st.stop()
+
+    st.success("SQL executed successfully.")
+
+    st.subheader("4. SQL Result")
+    st.dataframe(result, use_container_width=True)
+
+    st.subheader("5. Evidence Verification + Insight Agent")
+
+    insight_prompt = f"""
+You are MetricMind, an evidence-backed analytics agent.
+
+User question:
+{question}
+
+SQL query:
+{sql_query}
+
+SQL result:
+{result.to_string()}
+
+Generate:
+1. Main finding
+2. Evidence from the SQL result
+3. Possible business reason
+4. Recommended action
+5. Confidence level
+
+Rules:
+- Use only the SQL result.
+- Do not invent numbers.
+- Keep it crisp.
+"""
+
+    insight = model.generate_content(insight_prompt).text
+
+    st.markdown(insight)
+
     st.download_button(
-        label="Download Final Report",
-        data=report,
-        file_name="metricmind_report.txt",
+        label="Download Insight Report",
+        data=insight,
+        file_name="metricmind_v2_report.txt",
         mime="text/plain"
     )
