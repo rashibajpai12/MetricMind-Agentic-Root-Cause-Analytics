@@ -154,26 +154,138 @@ div[data-testid="stAlert"] {
 # Sidebar
 # =========================
 with st.sidebar:
-    st.markdown("## 📊 MetricMind")
-    st.markdown("AI-native analytics workspace")
 
-    st.markdown("---")
-    st.markdown("### Try Questions")
     st.markdown("""
-- Which category had the highest revenue decline?
-- Which region performed worst?
-- Show refund rates above 0.08
-- Largest revenue drop?
-""")
+    <style>
 
-    st.markdown("---")
-    st.markdown("### Agent Flow")
-    st.markdown("""
-**Question** → SQL Agent  
-**DuckDB** → Analytics  
-**Insight** → Verification  
-**Report** → Download  
-""")
+    .side-logo{
+        font-size:34px;
+        font-weight:900;
+        color:white;
+        margin-top:15px;
+        margin-bottom:10px;
+    }
+
+    .side-sub{
+        color:#A1A1AA;
+        font-size:15px;
+        margin-bottom:35px;
+    }
+
+    .side-card{
+        background:linear-gradient(
+            135deg,
+            rgba(139,92,246,0.10),
+            rgba(255,255,255,0.03)
+        );
+
+        border:1px solid rgba(255,255,255,0.08);
+
+        border-radius:24px;
+
+        padding:20px;
+
+        margin-bottom:22px;
+
+        backdrop-filter:blur(20px);
+    }
+
+    .side-card-title{
+        font-size:18px;
+        font-weight:700;
+        color:white;
+        margin-bottom:15px;
+    }
+
+    .question-pill{
+        background:#111827;
+
+        border:1px solid rgba(255,255,255,0.08);
+
+        border-radius:999px;
+
+        padding:12px;
+
+        margin-bottom:10px;
+
+        color:#E5E7EB;
+
+        font-size:14px;
+    }
+
+    .flow-step{
+        color:#D1D5DB;
+
+        padding:10px 0;
+
+        border-bottom:1px solid rgba(255,255,255,0.05);
+
+        font-size:15px;
+    }
+
+    .flow-step:last-child{
+        border-bottom:none;
+    }
+
+    </style>
+
+    <div class="side-logo">
+    📊 MetricMind
+    </div>
+
+    <div class="side-sub">
+    AI-native analytics workspace
+    </div>
+
+    <div class="side-card">
+
+        <div class="side-card-title">
+        Try Questions
+        </div>
+
+        <div class="question-pill">
+        Which category had the highest revenue decline?
+        </div>
+
+        <div class="question-pill">
+        Which region performed worst?
+        </div>
+
+        <div class="question-pill">
+        Show refund rates above 0.08
+        </div>
+
+        <div class="question-pill">
+        Largest revenue drop?
+        </div>
+
+    </div>
+
+    <div class="side-card">
+
+        <div class="side-card-title">
+        Agent Flow
+        </div>
+
+        <div class="flow-step">
+        Question → SQL Agent
+        </div>
+
+        <div class="flow-step">
+        DuckDB → Analytics
+        </div>
+
+        <div class="flow-step">
+        Insight → Verification
+        </div>
+
+        <div class="flow-step">
+        Report → Download
+        </div>
+
+    </div>
+
+    """, unsafe_allow_html=True)
 
 # =========================
 # Load Data
