@@ -1,3 +1,4 @@
+from workflow import run_workflow
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -496,6 +497,12 @@ with right:
 st.html('<div class="ask-title">Ask MetricMind</div>')
 
 question = st.chat_input("Ask a business question...")
+workflow_output = run_workflow(
+    question,
+    "sample result"
+)
+
+st.write(workflow_output)
 
 if question:
     st.markdown("## Analysis Workspace")
