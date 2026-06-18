@@ -1,4 +1,4 @@
-def verify_sql(sql):
+def check_sql(sql_query):
 
     blocked_words = [
         "DROP",
@@ -8,8 +8,7 @@ def verify_sql(sql):
         "ALTER"
     ]
 
-    for word in blocked_words:
-        if word in sql.upper():
-            return False
-
-    return True
+    return not any(
+        word in sql_query.upper()
+        for word in blocked_words
+    )
