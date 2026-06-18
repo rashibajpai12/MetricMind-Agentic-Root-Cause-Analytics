@@ -535,50 +535,13 @@ if question:
 
     st.success("SQL executed successfully.")
 
-    # 4. Insight Agent
-    insight_prompt = f"""
-You are MetricMind, an evidence-backed analytics agent.
+    insight = generate_insight(
+    question,
+    sql_query,
+    result.to_string()
+)
 
-User question:
-{question}
-
-SQL query:
-{sql_query}
-
-SQL result:
-{result.to_string()}
-
-Generate:
-1. Main finding
-2. Evidence from the SQL result
-3. Possible business reason
-4. Recommended action
-5. Confidence level
-
-Rules:
-- Use only the SQL result.
-- Do not invent numbers.
-- Keep it crisp.
-"""
-
-    insight = model.generate_content(insight_prompt).text
-
-    # 5. Evidence Verification Agent
-    verification_prompt = f"""
-Check if the insight is supported by the SQL result.
-
-Insight:
-{insight}
-
-SQL Result:
-{result.to_string()}
-
-Give:
-1. Evidence Score out of 10
-2. Unsupported claims if any
-"""
-
-    verification = model.generate_content(verification_prompt).text
+    verification = verify
 
     tab1, tab2, tab3, tab4 = st.tabs([
         "Generated SQL",
