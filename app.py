@@ -1,5 +1,7 @@
 from agents.sql_agent import generate_sql
 import streamlit as st
+from agents.insight_agent import generate_insight
+from agents.verification_agent import verify_evidence
 import pandas as pd
 import plotly.express as px
 import duckdb
