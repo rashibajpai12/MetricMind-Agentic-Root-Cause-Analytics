@@ -5,6 +5,24 @@ MetricMind is an AI-native analytics system that investigates why a business met
 [Launch MetricMind](https://metricmind-agentic-root-cause-analyticsgit-itkmydzjdeka3nlfhcy.streamlit.app/)
 
 ## Architecture
+
+User Question
+      ↓
+SQL Generation Agent
+      ↓
+DuckDB Query Execution
+      ↓
+Failure Detection Agent
+      ↓
+Analytics Result
+      ↓
+Insight Generation Agent
+      ↓
+Evidence Verification Agent
+      ↓
+Final Report
+
+## Architecture
 Streamlit UI → SQL Agent → Failure Agent → DuckDB → Insight Agent → Evidence Verification Agent → Report
 
 ## Screenshots
@@ -37,25 +55,6 @@ MetricMind enables users to ask natural-language business questions and automati
 - Evidence Verification Agent
 - Interactive Visualizations
 - Downloadable Analytics Reports
-- 
-## Architecture
-
-User Question
-      ↓
-SQL Generation Agent
-      ↓
-DuckDB Query Execution
-      ↓
-Failure Detection Agent
-      ↓
-Analytics Result
-      ↓
-Insight Generation Agent
-      ↓
-Evidence Verification Agent
-      ↓
-Final Report
-
 
 ## Tech Stack
 
