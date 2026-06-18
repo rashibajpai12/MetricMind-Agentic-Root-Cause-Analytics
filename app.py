@@ -170,81 +170,141 @@ html, body, [class*="css"] {
     color: #F4F4F1;
 }
 
-.orbit-box {
+/* MetricMind Agent Network Visual */
+
+.agent-visual {
     position: absolute;
-    right: 20px;
+    right: 10px;
     bottom: 35px;
-    width: 380px;
-    height: 300px;
-    opacity: 0.9;
+    width: 430px;
+    height: 310px;
 }
 
-.orbit-line {
+.graph-line {
     position: absolute;
-    top: 150px;
-    left: 0;
-    width: 210px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(232,221,200,0.35));
+    background: linear-gradient(90deg, transparent, rgba(232,221,200,0.55), transparent);
 }
 
-.orbit {
+.line-1 {
+    width: 250px;
+    top: 90px;
+    left: 72px;
+    transform: rotate(13deg);
+}
+
+.line-2 {
+    width: 250px;
+    top: 165px;
+    left: 82px;
+    transform: rotate(-12deg);
+}
+
+.line-3 {
+    width: 180px;
+    top: 224px;
+    left: 150px;
+    transform: rotate(8deg);
+}
+
+.line-4 {
+    width: 180px;
+    top: 56px;
+    left: 178px;
+    transform: rotate(-18deg);
+}
+
+.node {
     position: absolute;
-    right: 40px;
-    top: 35px;
-    width: 210px;
-    height: 210px;
-    border: 1px solid rgba(232,221,200,0.11);
-    border-radius: 50%;
-}
-
-.orbit.two {
-    right: 25px;
-    top: 20px;
-    width: 240px;
-    height: 240px;
-}
-
-.orbit.three {
-    right: 5px;
-    top: 0px;
-    width: 280px;
-    height: 280px;
-}
-
-.planet {
-    position: absolute;
-    right: 93px;
-    top: 92px;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #F4F0E8, #6D6658 55%, #161616 100%);
-    box-shadow: 0 0 80px rgba(232,221,200,0.25);
-}
-
-.spark {
-    position: absolute;
-    right: 122px;
-    top: 120px;
-    font-size: 38px;
-    color: #0B0B0B;
-}
-
-.small-planet {
-    position: absolute;
-    right: -18px;
-    top: 172px;
-    width: 64px;
-    height: 64px;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 50%;
+    width: 82px;
+    height: 82px;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.13);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #E9DEC8;
-    font-size: 30px;
-    background: rgba(255,255,255,0.035);
+    color: #E8DDC8;
+    font-size: 24px;
+    font-weight: 800;
+    box-shadow: 0 0 70px rgba(232,221,200,0.08);
+}
+
+.node-main {
+    width: 122px;
+    height: 122px;
+    border-radius: 34px;
+    right: 145px;
+    top: 92px;
+    font-size: 38px;
+    background: radial-gradient(circle at 35% 30%, #E8DDC8, #5F574A 58%, #101010 100%);
+    color: #050505;
+}
+
+.node-sql {
+    left: 28px;
+    top: 32px;
+}
+
+.node-data {
+    left: 36px;
+    bottom: 44px;
+}
+
+.node-verify {
+    right: 18px;
+    top: 30px;
+}
+
+.node-report {
+    right: 28px;
+    bottom: 42px;
+}
+
+.node-label {
+    position: absolute;
+    font-size: 11px;
+    color: #8F8F8F;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.label-sql {
+    left: 32px;
+    top: 122px;
+}
+
+.label-data {
+    left: 40px;
+    bottom: 18px;
+}
+
+.label-verify {
+    right: 18px;
+    top: 122px;
+}
+
+.label-report {
+    right: 30px;
+    bottom: 16px;
+}
+
+.pulse-ring {
+    position: absolute;
+    right: 129px;
+    top: 76px;
+    width: 154px;
+    height: 154px;
+    border-radius: 42px;
+    border: 1px solid rgba(232,221,200,0.14);
+    animation: pulse 3.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.94); opacity: 0.35; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(0.94); opacity: 0.35; }
 }
 
 .metric-strip {
@@ -415,14 +475,24 @@ st.html("""
         <div class="action-secondary">View Workflow</div>
     </div>
 
-    <div class="orbit-box">
-        <div class="orbit-line"></div>
-        <div class="orbit"></div>
-        <div class="orbit two"></div>
-        <div class="orbit three"></div>
-        <div class="planet"></div>
-        <div class="spark">✣</div>
-        <div class="small-planet">✦</div>
+    <div class="agent-visual">
+        <div class="graph-line line-1"></div>
+        <div class="graph-line line-2"></div>
+        <div class="graph-line line-3"></div>
+        <div class="graph-line line-4"></div>
+
+        <div class="pulse-ring"></div>
+
+        <div class="node node-sql">SQL</div>
+        <div class="node node-data">▦</div>
+        <div class="node node-main">AI</div>
+        <div class="node node-verify">✓</div>
+        <div class="node node-report">↗</div>
+
+        <div class="node-label label-sql">SQL Agent</div>
+        <div class="node-label label-data">Data Layer</div>
+        <div class="node-label label-verify">Verify</div>
+        <div class="node-label label-report">Report</div>
     </div>
 </div>
 """)
