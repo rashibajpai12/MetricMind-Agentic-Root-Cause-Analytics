@@ -1,9 +1,8 @@
 import google.generativeai as genai
 
 def verify_evidence(insight, result):
-
     prompt = f"""
-Check if the insight is supported by the SQL result.
+Verify whether the insight is supported by the SQL result.
 
 Insight:
 {insight}
@@ -11,11 +10,12 @@ Insight:
 SQL Result:
 {result}
 
-Give:
+Return:
 1. Evidence Score out of 10
-2. Unsupported claims if any
+2. Supported claims
+3. Unsupported claims
+4. Final verification status
 """
 
     response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
-
     return response.text
