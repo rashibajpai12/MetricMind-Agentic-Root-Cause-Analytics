@@ -1,4 +1,5 @@
 from workflow import run_workflow
+from agents.sql_agent import generate_sql
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -524,7 +525,10 @@ Do not use DROP, DELETE, UPDATE, INSERT, ALTER.
 Return only SQL, no explanation.
 """
 
-    sql_query = model.generate_content(sql_prompt).text.strip()
+    sql_query = generate_sql(
+    question,
+    list(root_cause.columns)
+)
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
     blocked_words = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
