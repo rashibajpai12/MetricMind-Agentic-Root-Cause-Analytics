@@ -1,4 +1,4 @@
-\import google.generativeai as genai
+import google.generativeai as genai
 
 def generate_insight(question, sql_query, result):
 
@@ -27,6 +27,8 @@ Rules:
 - Keep it crisp.
 """
 
-    response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
+    response = genai.GenerativeModel(
+        "gemini-2.5-flash"
+    ).generate_content(prompt)
 
     return response.text
