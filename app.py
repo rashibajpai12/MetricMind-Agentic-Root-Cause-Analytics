@@ -354,6 +354,10 @@ with st.sidebar:
     """)
 
 root_cause = pd.read_csv("data/metricmind_root_cause_results.csv")
+st.write("Rows:", len(root_cause))
+st.write("Regions:", root_cause["region"].nunique())
+st.write("Categories:", root_cause["category"].nunique())
+
 revenue = pd.read_csv("data/metricmind_monthly_revenue.csv")
 
 con = duckdb.connect()
