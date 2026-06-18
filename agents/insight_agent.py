@@ -1,7 +1,6 @@
 import google.generativeai as genai
 
 def generate_insight(question, sql_query, result):
-
     prompt = f"""
 You are MetricMind, an evidence-backed analytics agent.
 
@@ -16,19 +15,13 @@ SQL result:
 
 Generate:
 1. Main finding
-2. Evidence from the SQL result
-3. Possible business reason
+2. Evidence
+3. Possible reason
 4. Recommended action
 5. Confidence level
 
-Rules:
-- Use only the SQL result.
-- Do not invent numbers.
-- Keep it crisp.
+Use only the SQL result. Do not invent numbers.
 """
 
-    response = genai.GenerativeModel(
-        "gemini-2.5-flash"
-    ).generate_content(prompt)
-
+    response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
     return response.text
