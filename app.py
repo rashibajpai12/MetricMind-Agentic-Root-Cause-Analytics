@@ -353,8 +353,8 @@ with st.sidebar:
     <div class="side-pill">Report → Download</div>
     """)
 
-root_cause = pd.read_csv("metricmind_root_cause_results.csv")
-revenue = pd.read_csv("metricmind_monthly_revenue.csv")
+root_cause = pd.read_csv("data/metricmind_root_cause_results.csv")
+revenue = pd.read_csv("data/metricmind_monthly_revenue.csv")
 
 con = duckdb.connect()
 con.register("sales", root_cause)
