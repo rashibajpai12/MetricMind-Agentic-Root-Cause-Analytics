@@ -1,29 +1,22 @@
-from sql_agent import generate_sql
-from failure_agent import verify_sql
-from insight_agent import generate_insight
-from verification_agent import verify_evidence
+from agents.sql_agent import generate_sql
+from agents.failure_agent import check_sql
+from agents.insight_agent import generate_insight
+from agents.verification_agent import verify_evidence
 
 
-def run_workflow(question):
+def run_workflow(question, result):
 
-    sql = generate_sql(question)
+    sql_query = generate_sql(question)
 
-    safe = verify_sql(sql)
-
-    if not safe:
-        return "Unsafe SQL"
-
-    result = "query result"
+    safe = check_sql(sql_query)
 
     insight = generate_insight(result)
 
-    verification = verify_evidence(
-        insight,
-        result
-    )
+    verification = verify_evidence(insight)
 
     return {
-        "sql": sql,
+        "sql": sql_query,
+        "safe": safe,
         "insight": insight,
         "verification": verification
     }
