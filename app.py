@@ -543,7 +543,10 @@ if question:
     result.to_string()
 )
 
-    verification = verify
+    verification = verify_evidence(
+    insight,
+    result.to_string()
+)
 
     tab1, tab2, tab3, tab4 = st.tabs([
         "Generated SQL",
