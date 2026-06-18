@@ -1,9 +1,8 @@
 import google.generativeai as genai
 
 def generate_sql(question, columns):
-
     prompt = f"""
-You are a SQL generation agent.
+You are a SQL generation agent for DuckDB.
 
 Table name: sales
 
@@ -13,11 +12,10 @@ Columns:
 User question:
 {question}
 
-Generate one safe DuckDB SQL query only.
+Generate ONE safe DuckDB SQL query only.
 Do not use DROP, DELETE, UPDATE, INSERT, ALTER.
-Return only SQL, no explanation.
+Return SQL only. No explanation.
 """
 
     response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
-
-    return response.text.strip()
+    return response.text.replace("```sql", "").replace("```", "").strip()
