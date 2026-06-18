@@ -4,9 +4,9 @@ from agents.insight_agent import generate_insight
 from agents.verification_agent import verify_evidence
 
 
-def run_workflow(question, result):
+def run_workflow(question, result, columns):
 
-    sql_query = generate_sql(question)
+    sql_query = generate_sql(question, columns)
 
     safe = check_sql(sql_query)
 
