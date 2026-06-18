@@ -1,6 +1,6 @@
-def check_sql(sql_query):
+def check_sql(sql):
 
-    blocked_words = [
+    blocked = [
         "DROP",
         "DELETE",
         "UPDATE",
@@ -8,7 +8,8 @@ def check_sql(sql_query):
         "ALTER"
     ]
 
-    return not any(
-        word in sql_query.upper()
-        for word in blocked_words
-    )
+    for word in blocked:
+        if word in sql.upper():
+            return False
+
+    return True
