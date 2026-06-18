@@ -4,304 +4,367 @@ import plotly.express as px
 import duckdb
 import google.generativeai as genai
 
-st.set_page_config(page_title="MetricMind", page_icon="◐", layout="wide")
+st.set_page_config(
+    page_title="MetricMind",
+    page_icon="◐",
+    layout="wide"
+)
 
-st.markdown("""
+st.html("""
 <style>
-.stApp { background:#030303; color:#F4F4F1; }
-#MainMenu, footer, header { visibility:hidden; }
-.block-container { max-width:1400px; padding:2rem 4rem; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+.stApp {
+    background: #030303;
+    color: #F4F4F1;
+}
+
+#MainMenu, footer, header {
+    visibility: hidden;
+}
+
+.block-container {
+    max-width: 1420px;
+    padding: 2rem 4rem 4rem 4rem;
+}
 
 [data-testid="stSidebar"] {
-    background:#050505;
-    border-right:1px solid rgba(255,255,255,0.08);
+    background: #050505;
+    border-right: 1px solid rgba(255,255,255,0.08);
 }
 
 .side-brand {
-    font-size:28px;
-    font-weight:800;
-    letter-spacing:-0.04em;
-    margin-bottom:8px;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
 }
 
 .side-sub {
-    color:#8f8f8f;
-    font-size:14px;
-    line-height:1.6;
-    margin-bottom:34px;
+    color: #8F8F8F;
+    font-size: 14px;
+    margin-bottom: 34px;
+    line-height: 1.7;
 }
 
 .side-section {
-    margin-top:32px;
-    margin-bottom:14px;
-    color:#777;
-    font-size:11px;
-    letter-spacing:0.24em;
-    text-transform:uppercase;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
 }
 
 .side-pill {
-    border:1px solid rgba(255,255,255,0.09);
-    background:rgba(255,255,255,0.025);
-    border-radius:999px;
-    padding:12px 15px;
-    margin-bottom:11px;
-    color:#d7d7d7;
-    font-size:13px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.025);
+    border-radius: 999px;
+    padding: 11px 14px;
+    margin-bottom: 10px;
+    color: #D7D7D7;
+    font-size: 13px;
+    line-height: 1.45;
 }
 
 .top-nav {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 110px;
 }
 
 .logo {
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:-0.04em;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
 }
 
 .nav-links {
-    display:flex;
-    gap:34px;
-    color:#b8b8b8;
-    font-size:14px;
-    font-weight:600;
+    display: flex;
+    gap: 34px;
+    color: #B8B8B8;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .sign-btn {
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:999px;
-    padding:12px 22px;
-    background:rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    padding: 12px 22px;
+    color: #F5F5F5;
+    background: rgba(255,255,255,0.04);
 }
 
-.hero-wrap { position:relative; min-height:520px; }
+.hero-wrap {
+    position: relative;
+    min-height: 520px;
+}
 
 .eyebrow {
-    display:flex;
-    align-items:center;
-    gap:18px;
-    color:#747474;
-    font-size:12px;
-    letter-spacing:0.35em;
-    text-transform:uppercase;
-    margin-bottom:38px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #747474;
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 38px;
 }
 
-.eyebrow-line { width:32px; height:1px; background:#787878; }
+.eyebrow-line {
+    width: 32px;
+    height: 1px;
+    background: #787878;
+}
 
 .hero-title {
-    font-size:clamp(72px, 8vw, 126px);
-    font-weight:800;
-    letter-spacing:-0.075em;
-    line-height:0.92;
-    max-width:980px;
-    color:#f2f2ee;
+    font-size: clamp(72px, 8vw, 128px);
+    font-weight: 800;
+    letter-spacing: -0.075em;
+    line-height: 0.92;
+    max-width: 980px;
+    color: #F2F2EE;
 }
 
-.hero-title span { color:#e9dec8; }
+.hero-title span {
+    color: #E9DEC8;
+}
 
 .hero-desc {
-    margin-top:44px;
-    max-width:660px;
-    color:#a7acb8;
-    font-size:20px;
-    line-height:1.75;
-    font-weight:500;
+    margin-top: 44px;
+    max-width: 650px;
+    color: #A7ACB8;
+    font-size: 20px;
+    line-height: 1.75;
+    font-weight: 500;
 }
 
-.hero-actions { display:flex; gap:16px; margin-top:46px; }
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 46px;
+}
 
 .action-primary, .action-secondary {
-    border-radius:999px;
-    padding:15px 26px;
-    font-size:14px;
-    font-weight:700;
-    display:inline-block;
+    border-radius: 999px;
+    padding: 15px 26px;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
 }
 
 .action-primary {
-    border:1px solid rgba(255,255,255,0.16);
-    background:rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.055);
+    color: #F4F4F1;
 }
 
 .action-secondary {
-    border:1px solid rgba(255,255,255,0.08);
-    background:rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.025);
+    color: #F4F4F1;
 }
 
 .orbit-box {
-    position:absolute;
-    right:20px;
-    bottom:35px;
-    width:380px;
-    height:300px;
+    position: absolute;
+    right: 20px;
+    bottom: 35px;
+    width: 380px;
+    height: 300px;
+    opacity: 0.9;
 }
 
 .orbit-line {
-    position:absolute;
-    top:150px;
-    left:0;
-    width:210px;
-    height:1px;
-    background:linear-gradient(90deg, transparent, rgba(232,221,200,0.35));
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 210px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,221,200,0.35));
 }
 
 .orbit {
-    position:absolute;
-    right:40px;
-    top:35px;
-    width:210px;
-    height:210px;
-    border:1px solid rgba(232,221,200,0.11);
-    border-radius:50%;
+    position: absolute;
+    right: 40px;
+    top: 35px;
+    width: 210px;
+    height: 210px;
+    border: 1px solid rgba(232,221,200,0.11);
+    border-radius: 50%;
 }
 
-.orbit.two { right:25px; top:20px; width:240px; height:240px; }
-.orbit.three { right:5px; top:0px; width:280px; height:280px; }
+.orbit.two {
+    right: 25px;
+    top: 20px;
+    width: 240px;
+    height: 240px;
+}
+
+.orbit.three {
+    right: 5px;
+    top: 0px;
+    width: 280px;
+    height: 280px;
+}
 
 .planet {
-    position:absolute;
-    right:93px;
-    top:92px;
-    width:96px;
-    height:96px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, #f4f0e8, #6d6658 55%, #161616 100%);
-    box-shadow:0 0 80px rgba(232,221,200,0.25);
+    position: absolute;
+    right: 93px;
+    top: 92px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #F4F0E8, #6D6658 55%, #161616 100%);
+    box-shadow: 0 0 80px rgba(232,221,200,0.25);
 }
 
 .spark {
-    position:absolute;
-    right:122px;
-    top:120px;
-    font-size:38px;
-    color:#0b0b0b;
+    position: absolute;
+    right: 122px;
+    top: 120px;
+    font-size: 38px;
+    color: #0B0B0B;
 }
 
 .small-planet {
-    position:absolute;
-    right:-18px;
-    top:172px;
-    width:64px;
-    height:64px;
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#e9dec8;
-    font-size:30px;
-    background:rgba(255,255,255,0.035);
+    position: absolute;
+    right: -18px;
+    top: 172px;
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E9DEC8;
+    font-size: 30px;
+    background: rgba(255,255,255,0.035);
 }
 
 .metric-strip {
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:16px;
-    margin-top:30px;
-    margin-bottom:48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 30px;
+    margin-bottom: 48px;
 }
 
 .metric-card {
-    border:1px solid rgba(255,255,255,0.09);
-    background:rgba(255,255,255,0.025);
-    border-radius:22px;
-    padding:26px;
-    min-height:132px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.025);
+    border-radius: 22px;
+    padding: 26px;
+    min-height: 132px;
 }
 
-.metric-card.accent { background:#e8ddc8; color:#050505; }
+.metric-card.accent {
+    background: #E8DDC8;
+    color: #050505;
+}
 
 .metric-label {
-    font-size:14px;
-    color:#8d8d8d;
-    font-weight:600;
+    font-size: 14px;
+    color: #8D8D8D;
+    font-weight: 600;
 }
 
-.metric-card.accent .metric-label { color:#373737; }
+.metric-card.accent .metric-label {
+    color: #373737;
+}
 
 .metric-value {
-    margin-top:30px;
-    font-size:44px;
-    font-weight:800;
-    letter-spacing:-0.06em;
+    margin-top: 30px;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.06em;
 }
 
 .panel-title {
-    font-size:26px;
-    font-weight:750;
-    letter-spacing:-0.04em;
-    margin-bottom:18px;
+    font-size: 26px;
+    font-weight: 750;
+    letter-spacing: -0.04em;
+    margin-bottom: 18px;
 }
 
 .panel {
-    border:1px solid rgba(255,255,255,0.09);
-    background:rgba(255,255,255,0.025);
-    border-radius:26px;
-    padding:26px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.025);
+    border-radius: 26px;
+    padding: 26px;
 }
 
 .agent-row {
-    border-bottom:1px solid rgba(255,255,255,0.07);
-    padding:14px 0;
-    color:#d8d8d8;
-    font-size:15px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 14px 0;
+    color: #D8D8D8;
+    font-size: 15px;
 }
 
-.agent-row:last-child { border-bottom:none; }
-.dot { color:#e8ddc8; }
+.agent-row:last-child {
+    border-bottom: none;
+}
+
+.dot {
+    color: #E8DDC8;
+}
 
 .ask-title {
-    font-size:52px;
-    font-weight:800;
-    letter-spacing:-0.07em;
-    margin-bottom:18px;
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -0.07em;
+    margin-bottom: 18px;
 }
 
 [data-testid="stChatInput"] {
-    background:rgba(255,255,255,0.04);
-    border-radius:999px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 999px;
 }
 
-.stTabs [data-baseweb="tab-list"] { gap:12px; }
+.stTabs [data-baseweb="tab-list"] {
+    gap: 12px;
+}
 
 .stTabs [data-baseweb="tab"] {
-    background:rgba(255,255,255,0.035);
-    border-radius:999px;
-    padding:10px 20px;
-    border:1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+    border-radius: 999px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 [data-testid="stDataFrame"] {
-    border-radius:18px;
-    overflow:hidden;
+    border-radius: 18px;
+    overflow: hidden;
 }
 
-div[data-testid="stAlert"] { border-radius:18px; }
+div[data-testid="stAlert"] {
+    border-radius: 18px;
+}
 </style>
-""", unsafe_allow_html=True)
+""")
 
 with st.sidebar:
-    st.markdown("""
-<div class="side-brand">MetricMind <span style="color:#e8ddc8;">●</span></div>
-<div class="side-sub">Agentic analytics workspace for root-cause intelligence.</div>
+    st.html("""
+    <div class="side-brand">MetricMind <span style="color:#E8DDC8;">●</span></div>
+    <div class="side-sub">Agentic analytics workspace for root-cause intelligence.</div>
 
-<div class="side-section">Sample Questions</div>
-<div class="side-pill">Which category had the highest revenue decline?</div>
-<div class="side-pill">Which region performed worst?</div>
-<div class="side-pill">Show refund rates above 0.08</div>
-<div class="side-pill">Largest revenue drop?</div>
+    <div class="side-section">Sample Questions</div>
+    <div class="side-pill">Which category had the highest revenue decline?</div>
+    <div class="side-pill">Which region performed worst?</div>
+    <div class="side-pill">Show refund rates above 0.08</div>
+    <div class="side-pill">Largest revenue drop?</div>
 
-<div class="side-section">Agent Flow</div>
-<div class="side-pill">Question → SQL Agent</div>
-<div class="side-pill">DuckDB → Analytics</div>
-<div class="side-pill">Insight → Verification</div>
-<div class="side-pill">Report → Download</div>
-""", unsafe_allow_html=True)
+    <div class="side-section">Agent Flow</div>
+    <div class="side-pill">Question → SQL Agent</div>
+    <div class="side-pill">DuckDB → Analytics</div>
+    <div class="side-pill">Insight → Verification</div>
+    <div class="side-pill">Report → Download</div>
+    """)
 
 root_cause = pd.read_csv("metricmind_root_cause_results.csv")
 revenue = pd.read_csv("metricmind_monthly_revenue.csv")
@@ -317,7 +380,7 @@ if api_key:
 else:
     model = None
 
-st.markdown("""
+st.html("""
 <div class="top-nav">
     <div class="logo">metricmind ●</div>
     <div class="nav-links">
@@ -328,9 +391,9 @@ st.markdown("""
     </div>
     <div class="sign-btn">Live Demo</div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
-st.markdown("""
+st.html("""
 <div class="hero-wrap">
     <div class="eyebrow">
         <div class="eyebrow-line"></div>
@@ -362,9 +425,9 @@ st.markdown("""
         <div class="small-planet">✦</div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
-st.markdown(f"""
+st.html(f"""
 <div class="metric-strip">
     <div class="metric-card accent">
         <div class="metric-label">Segments Analyzed ↗</div>
@@ -383,12 +446,12 @@ st.markdown(f"""
         <div class="metric-value">9.4</div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 left, right = st.columns([1.45, 1], gap="large")
 
 with left:
-    st.markdown('<div class="panel-title">Revenue Impact Overview</div>', unsafe_allow_html=True)
+    st.html('<div class="panel-title">Revenue Impact Overview</div>')
 
     if {"category", "revenue_change", "region"}.issubset(root_cause.columns):
         fig_preview = px.bar(
@@ -409,18 +472,18 @@ with left:
         st.plotly_chart(fig_preview, use_container_width=True)
 
 with right:
-    st.markdown('<div class="panel-title">Agent Status</div>', unsafe_allow_html=True)
-    st.markdown("""
-<div class="panel">
-    <div class="agent-row"><span class="dot">●</span> SQL Generation Agent Ready</div>
-    <div class="agent-row"><span class="dot">●</span> DuckDB Execution Ready</div>
-    <div class="agent-row"><span class="dot">●</span> Failure Detection Active</div>
-    <div class="agent-row"><span class="dot">●</span> Evidence Verification Active</div>
-    <div class="agent-row"><span class="dot">●</span> Report Export Enabled</div>
-</div>
-""", unsafe_allow_html=True)
+    st.html('<div class="panel-title">Agent Status</div>')
+    st.html("""
+    <div class="panel">
+        <div class="agent-row"><span class="dot">●</span> SQL Generation Agent Ready</div>
+        <div class="agent-row"><span class="dot">●</span> DuckDB Execution Ready</div>
+        <div class="agent-row"><span class="dot">●</span> Failure Detection Active</div>
+        <div class="agent-row"><span class="dot">●</span> Evidence Verification Active</div>
+        <div class="agent-row"><span class="dot">●</span> Report Export Enabled</div>
+    </div>
+    """)
 
-st.markdown('<div class="ask-title">Ask MetricMind</div>', unsafe_allow_html=True)
+st.html('<div class="ask-title">Ask MetricMind</div>')
 
 question = st.chat_input("Ask a business question...")
 
