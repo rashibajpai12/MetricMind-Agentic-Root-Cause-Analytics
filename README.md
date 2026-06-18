@@ -7,18 +7,19 @@ MetricMind is an AI-native analytics system that investigates why a business met
 
 ## Architecture
 
+```text
 User Question
-↓
-SQL Agent
-↓
+    ↓
+SQL Generation Agent
+    ↓
 Failure Detection Agent
-↓
+    ↓
 DuckDB Analytics Engine
-↓
-Insight Agent
-↓
+    ↓
+Insight Generation Agent
+    ↓
 Evidence Verification Agent
-↓
+    ↓
 Business Report
 
 ## Screenshots
