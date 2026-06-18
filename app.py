@@ -28,8 +28,8 @@ html, body, [class*="css"] {
 }
 
 .block-container {
-    max-width: 1420px;
-    padding: 2rem 4rem 4rem 4rem;
+    max-width: 1320px;
+    padding: 1.6rem 3rem 3rem 3rem;
 }
 
 [data-testid="stSidebar"] {
@@ -75,7 +75,7 @@ html, body, [class*="css"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 110px;
+    margin-bottom: 70px;
 }
 
 .logo {
@@ -86,7 +86,7 @@ html, body, [class*="css"] {
 
 .nav-links {
     display: flex;
-    gap: 34px;
+    gap: 30px;
     color: #B8B8B8;
     font-size: 14px;
     font-weight: 600;
@@ -95,25 +95,29 @@ html, body, [class*="css"] {
 .sign-btn {
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 999px;
-    padding: 12px 22px;
+    padding: 11px 20px;
     color: #F5F5F5;
     background: rgba(255,255,255,0.04);
 }
 
-.hero-wrap {
-    position: relative;
-    min-height: 520px;
+.hero {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 34px;
+    align-items: center;
+    min-height: 360px;
+    margin-bottom: 30px;
 }
 
 .eyebrow {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
     color: #747474;
-    font-size: 12px;
-    letter-spacing: 0.35em;
+    font-size: 11px;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    margin-bottom: 38px;
+    margin-bottom: 28px;
 }
 
 .eyebrow-line {
@@ -123,11 +127,11 @@ html, body, [class*="css"] {
 }
 
 .hero-title {
-    font-size: clamp(72px, 8vw, 128px);
-    font-weight: 800;
-    letter-spacing: -0.075em;
-    line-height: 0.92;
-    max-width: 980px;
+    font-size: clamp(58px, 6vw, 92px);
+    font-weight: 820;
+    letter-spacing: -0.07em;
+    line-height: 0.94;
+    max-width: 760px;
     color: #F2F2EE;
 }
 
@@ -136,23 +140,23 @@ html, body, [class*="css"] {
 }
 
 .hero-desc {
-    margin-top: 44px;
-    max-width: 650px;
+    margin-top: 28px;
+    max-width: 640px;
     color: #A7ACB8;
-    font-size: 20px;
-    line-height: 1.75;
+    font-size: 18px;
+    line-height: 1.65;
     font-weight: 500;
 }
 
 .hero-actions {
     display: flex;
-    gap: 16px;
-    margin-top: 46px;
+    gap: 14px;
+    margin-top: 34px;
 }
 
 .action-primary, .action-secondary {
     border-radius: 999px;
-    padding: 15px 26px;
+    padding: 13px 23px;
     font-size: 14px;
     font-weight: 700;
     display: inline-block;
@@ -170,157 +174,74 @@ html, body, [class*="css"] {
     color: #F4F4F1;
 }
 
-/* MetricMind Agent Network Visual */
-
-.agent-visual {
-    position: absolute;
-    right: 10px;
-    bottom: 35px;
-    width: 430px;
-    height: 310px;
+/* Compact agent visual */
+.agent-card-visual {
+    border: 1px solid rgba(255,255,255,0.09);
+    background: radial-gradient(circle at top right, rgba(232,221,200,0.10), transparent 38%),
+                rgba(255,255,255,0.025);
+    border-radius: 30px;
+    padding: 28px;
+    min-height: 285px;
 }
 
-.graph-line {
-    position: absolute;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(232,221,200,0.55), transparent);
+.agent-visual-title {
+    color: #E9DEC8;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
 }
 
-.line-1 {
-    width: 250px;
-    top: 90px;
-    left: 72px;
-    transform: rotate(13deg);
+.flow-node {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
-.line-2 {
-    width: 250px;
-    top: 165px;
-    left: 82px;
-    transform: rotate(-12deg);
+.flow-node:last-child {
+    border-bottom: none;
 }
 
-.line-3 {
-    width: 180px;
-    top: 224px;
-    left: 150px;
-    transform: rotate(8deg);
-}
-
-.line-4 {
-    width: 180px;
-    top: 56px;
-    left: 178px;
-    transform: rotate(-18deg);
-}
-
-.node {
-    position: absolute;
-    width: 82px;
-    height: 82px;
-    border-radius: 26px;
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.13);
+.node-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    background: #E8DDC8;
+    color: #050505;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #E8DDC8;
-    font-size: 24px;
-    font-weight: 800;
-    box-shadow: 0 0 70px rgba(232,221,200,0.08);
+    font-weight: 900;
 }
 
-.node-main {
-    width: 122px;
-    height: 122px;
-    border-radius: 34px;
-    right: 145px;
-    top: 92px;
-    font-size: 38px;
-    background: radial-gradient(circle at 35% 30%, #E8DDC8, #5F574A 58%, #101010 100%);
-    color: #050505;
+.node-text {
+    font-size: 15px;
+    color: #E7E7E7;
+    font-weight: 600;
 }
 
-.node-sql {
-    left: 28px;
-    top: 32px;
-}
-
-.node-data {
-    left: 36px;
-    bottom: 44px;
-}
-
-.node-verify {
-    right: 18px;
-    top: 30px;
-}
-
-.node-report {
-    right: 28px;
-    bottom: 42px;
-}
-
-.node-label {
-    position: absolute;
-    font-size: 11px;
+.node-sub {
+    font-size: 12px;
     color: #8F8F8F;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-.label-sql {
-    left: 32px;
-    top: 122px;
-}
-
-.label-data {
-    left: 40px;
-    bottom: 18px;
-}
-
-.label-verify {
-    right: 18px;
-    top: 122px;
-}
-
-.label-report {
-    right: 30px;
-    bottom: 16px;
-}
-
-.pulse-ring {
-    position: absolute;
-    right: 129px;
-    top: 76px;
-    width: 154px;
-    height: 154px;
-    border-radius: 42px;
-    border: 1px solid rgba(232,221,200,0.14);
-    animation: pulse 3.2s infinite ease-in-out;
-}
-
-@keyframes pulse {
-    0% { transform: scale(0.94); opacity: 0.35; }
-    50% { transform: scale(1.05); opacity: 0.8; }
-    100% { transform: scale(0.94); opacity: 0.35; }
+    margin-top: 3px;
 }
 
 .metric-strip {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 30px;
-    margin-bottom: 48px;
+    gap: 14px;
+    margin-top: 18px;
+    margin-bottom: 34px;
 }
 
 .metric-card {
     border: 1px solid rgba(255,255,255,0.09);
     background: rgba(255,255,255,0.025);
     border-radius: 22px;
-    padding: 26px;
-    min-height: 132px;
+    padding: 22px;
+    min-height: 118px;
 }
 
 .metric-card.accent {
@@ -329,7 +250,7 @@ html, body, [class*="css"] {
 }
 
 .metric-label {
-    font-size: 14px;
+    font-size: 13px;
     color: #8D8D8D;
     font-weight: 600;
 }
@@ -339,29 +260,29 @@ html, body, [class*="css"] {
 }
 
 .metric-value {
-    margin-top: 30px;
-    font-size: 44px;
+    margin-top: 24px;
+    font-size: 39px;
     font-weight: 800;
     letter-spacing: -0.06em;
 }
 
 .panel-title {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 750;
     letter-spacing: -0.04em;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
 
 .panel {
     border: 1px solid rgba(255,255,255,0.09);
     background: rgba(255,255,255,0.025);
     border-radius: 26px;
-    padding: 26px;
+    padding: 22px;
 }
 
 .agent-row {
     border-bottom: 1px solid rgba(255,255,255,0.07);
-    padding: 14px 0;
+    padding: 13px 0;
     color: #D8D8D8;
     font-size: 15px;
 }
@@ -375,10 +296,11 @@ html, body, [class*="css"] {
 }
 
 .ask-title {
-    font-size: 52px;
+    font-size: 42px;
     font-weight: 800;
     letter-spacing: -0.07em;
-    margin-bottom: 18px;
+    margin-top: 22px;
+    margin-bottom: 14px;
 }
 
 [data-testid="stChatInput"] {
@@ -454,45 +376,63 @@ st.html("""
 """)
 
 st.html("""
-<div class="hero-wrap">
-    <div class="eyebrow">
-        <div class="eyebrow-line"></div>
-        Agentic Analytics
+<div class="hero">
+    <div>
+        <div class="eyebrow">
+            <div class="eyebrow-line"></div>
+            Agentic Analytics
+        </div>
+
+        <div class="hero-title">
+            Business Metrics, <span>Explained.</span>
+        </div>
+
+        <div class="hero-desc">
+            MetricMind converts business questions into executable SQL,
+            validates evidence, and generates decision-ready root-cause insights
+            for analytics teams.
+        </div>
+
+        <div class="hero-actions">
+            <div class="action-primary">Ask MetricMind →</div>
+            <div class="action-secondary">View Workflow</div>
+        </div>
     </div>
 
-    <div class="hero-title">
-        Everything About <span>Business Metrics</span>
-    </div>
+    <div class="agent-card-visual">
+        <div class="agent-visual-title">MetricMind Pipeline</div>
 
-    <div class="hero-desc">
-        MetricMind converts natural-language business questions into executable SQL,
-        validates outputs through evidence checks, and produces decision-ready
-        root-cause reports for analytics teams.
-    </div>
+        <div class="flow-node">
+            <div class="node-icon">Q</div>
+            <div>
+                <div class="node-text">Natural Language Question</div>
+                <div class="node-sub">User asks business metric query</div>
+            </div>
+        </div>
 
-    <div class="hero-actions">
-        <div class="action-primary">Ask MetricMind →</div>
-        <div class="action-secondary">View Workflow</div>
-    </div>
+        <div class="flow-node">
+            <div class="node-icon">SQL</div>
+            <div>
+                <div class="node-text">SQL Generation Agent</div>
+                <div class="node-sub">Gemini creates safe DuckDB SQL</div>
+            </div>
+        </div>
 
-    <div class="agent-visual">
-        <div class="graph-line line-1"></div>
-        <div class="graph-line line-2"></div>
-        <div class="graph-line line-3"></div>
-        <div class="graph-line line-4"></div>
+        <div class="flow-node">
+            <div class="node-icon">DB</div>
+            <div>
+                <div class="node-text">Analytics Execution</div>
+                <div class="node-sub">DuckDB runs query over root-cause data</div>
+            </div>
+        </div>
 
-        <div class="pulse-ring"></div>
-
-        <div class="node node-sql">SQL</div>
-        <div class="node node-data">▦</div>
-        <div class="node node-main">AI</div>
-        <div class="node node-verify">✓</div>
-        <div class="node node-report">↗</div>
-
-        <div class="node-label label-sql">SQL Agent</div>
-        <div class="node-label label-data">Data Layer</div>
-        <div class="node-label label-verify">Verify</div>
-        <div class="node-label label-report">Report</div>
+        <div class="flow-node">
+            <div class="node-icon">✓</div>
+            <div>
+                <div class="node-text">Evidence Verification</div>
+                <div class="node-sub">Checks insight against result table</div>
+            </div>
+        </div>
     </div>
 </div>
 """)
@@ -535,7 +475,7 @@ with left:
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="#050505",
             font_color="#F4F4F1",
-            height=330,
+            height=300,
             margin=dict(l=10, r=10, t=10, b=10),
             legend=dict(orientation="h", y=1.08, x=1, xanchor="right")
         )
