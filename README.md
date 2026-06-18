@@ -5,6 +5,10 @@ MetricMind is an AI-native analytics system that investigates why a business met
 ## Live Demo
 [Launch MetricMind](https://metricmind-agentic-root-cause-analyticsgit-itkmydzjdeka3nlfhcy.streamlit.app/)
 
+## Agent Architecture
+
+MetricMind uses modular agents for SQL generation, failure detection, insight generation and evidence verification.
+
 ## Architecture
 
 ```text
