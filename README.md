@@ -21,6 +21,7 @@ Insight Generation Agent
 Evidence Verification Agent
     ↓
 Business Report
+```
 
 ## Screenshots
 
