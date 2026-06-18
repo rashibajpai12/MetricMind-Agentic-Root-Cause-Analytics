@@ -499,7 +499,6 @@ st.html('<div class="ask-title">Ask MetricMind</div>')
 question = st.chat_input("Ask a business question...")
 
 
-st.write(workflow_output)
 
 if question:
     st.markdown("## Analysis Workspace")
