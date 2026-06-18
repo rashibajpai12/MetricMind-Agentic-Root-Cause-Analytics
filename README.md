@@ -8,7 +8,6 @@ MetricMind is an AI-native analytics system that investigates why a business met
 Streamlit UI → SQL Agent → Failure Agent → DuckDB → Insight Agent → Evidence Verification Agent → Report
 
 ## Screenshots
-## Screenshots
 
 ### Landing Page
 ![Landing](assets/landing.png)
