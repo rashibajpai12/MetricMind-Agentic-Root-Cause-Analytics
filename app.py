@@ -1,4 +1,3 @@
-from workflow import run_workflow
 from agents.sql_agent import generate_sql
 import streamlit as st
 import pandas as pd
@@ -499,8 +498,6 @@ st.html('<div class="ask-title">Ask MetricMind</div>')
 
 question = st.chat_input("Ask a business question...")
 
-
-
 if question:
     st.markdown("## Analysis Workspace")
     st.markdown(f"**Question:** {question}")
@@ -509,34 +506,20 @@ if question:
         st.error("Gemini API key is missing. Add GEMINI_API_KEY in Streamlit secrets.")
         st.stop()
 
-    sql_prompt = f"""
-You are a SQL generation agent.
-
-Table name: sales
-
-Columns:
-{list(root_cause.columns)}
-
-User question:
-{question}
-
-Generate one safe DuckDB SQL query only.
-Do not use DROP, DELETE, UPDATE, INSERT, ALTER.
-Return only SQL, no explanation.
-"""
-
+    # 1. SQL Agent
     sql_query = generate_sql(
-    question,
-    list(root_cause.columns)
-)
+        question,
+        list(root_cause.columns)
+    )
+
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
 
-    blocked_words = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
-
-    if any(word in sql_query.upper() for word in blocked_words):
+    # 2. Failure Detection Agent
+    if not check_sql(sql_query):
         st.error("Unsafe SQL detected. Query blocked.")
         st.stop()
 
+    # 3. DuckDB Execution
     try:
         result = con.execute(sql_query).fetchdf()
     except Exception as e:
@@ -550,6 +533,7 @@ Return only SQL, no explanation.
 
     st.success("SQL executed successfully.")
 
+    # 4. Insight Agent
     insight_prompt = f"""
 You are MetricMind, an evidence-backed analytics agent.
 
@@ -577,6 +561,7 @@ Rules:
 
     insight = model.generate_content(insight_prompt).text
 
+    # 5. Evidence Verification Agent
     verification_prompt = f"""
 Check if the insight is supported by the SQL result.
 
@@ -633,3 +618,4 @@ Give:
         file_name="metricmind_v2_report.txt",
         mime="text/plain"
     )
+
