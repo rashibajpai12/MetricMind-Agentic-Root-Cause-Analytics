@@ -1,32 +1,72 @@
-import google.generativeai as genai
-import streamlit as st
+def generate_sql(question, schema=None):
+    q = question.lower()
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-2.5-flash")
+    if "highest revenue" in q or "most revenue" in q:
+        if "category" in q:
+            return """
+            SELECT category, SUM(revenue) AS total_revenue
+            FROM sales
+            GROUP BY category
+            ORDER BY total_revenue DESC
+            LIMIT 10
+            """
+        if "region" in q:
+            return """
+            SELECT region, SUM(revenue) AS total_revenue
+            FROM sales
+            GROUP BY region
+            ORDER BY total_revenue DESC
+            LIMIT 10
+            """
 
-def generate_sql(question, schema):
-    prompt = f"""
-You are an expert business analytics SQL agent.
+    if "lowest profit" in q or "worst profit" in q:
+        return """
+        SELECT region, SUM(profit) AS total_profit
+        FROM sales
+        GROUP BY region
+        ORDER BY total_profit ASC
+        LIMIT 10
+        """
 
-Table name: sales
+    if "monthly revenue" in q or "revenue trend" in q:
+        return """
+        SELECT year, month, SUM(revenue) AS total_revenue
+        FROM sales
+        GROUP BY year, month
+        ORDER BY year, month
+        """
 
-Schema:
-{schema}
+    if "refund" in q:
+        return """
+        SELECT category, AVG(refund_rate) AS avg_refund_rate
+        FROM sales
+        GROUP BY category
+        ORDER BY avg_refund_rate DESC
+        LIMIT 10
+        """
 
-Task:
-Convert the user's business question into one valid DuckDB SQL query.
+    if "customer segment" in q or "most profitable" in q:
+        return """
+        SELECT customer_segment, SUM(profit) AS total_profit
+        FROM sales
+        GROUP BY customer_segment
+        ORDER BY total_profit DESC
+        LIMIT 10
+        """
 
-Rules:
-- Return only SQL.
-- No markdown.
-- No explanation.
-- Use only columns from the schema.
-- Prefer aggregation when needed.
-- Limit results to 20 rows unless the user asks otherwise.
+    if "compare revenue by region and category" in q:
+        return """
+        SELECT region, category, SUM(revenue) AS total_revenue
+        FROM sales
+        GROUP BY region, category
+        ORDER BY total_revenue DESC
+        LIMIT 20
+        """
 
-Question:
-{question}
-"""
-
-    response = model.generate_content(prompt)
-    return response.text.strip().replace("```sql", "").replace("```", "")
+    return """
+    SELECT category, region, SUM(revenue) AS total_revenue, SUM(profit) AS total_profit, AVG(refund_rate) AS avg_refund_rate
+    FROM sales
+    GROUP BY category, region
+    ORDER BY total_revenue DESC
+    LIMIT 20
+    """
