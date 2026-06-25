@@ -1,27 +1,25 @@
 import google.generativeai as genai
+import streamlit as st
 
-def generate_insight(question, sql_query, result):
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+def generate_insight(question, result):
     prompt = f"""
-You are MetricMind, an evidence-backed analytics agent.
+You are a business analyst.
 
-User question:
+Question:
 {question}
 
-SQL query:
-{sql_query}
-
-SQL result:
+SQL Result:
 {result}
 
 Generate:
-1. Main finding
-2. Evidence
-3. Possible reason
-4. Recommended action
-5. Confidence level
+1. Main insight
+2. Business meaning
+3. Risk level
+4. One-line executive summary
 
-Use only the SQL result. Do not invent numbers.
+Be concise and specific.
 """
-
-    response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
-    return response.text
+    return model.generate_content(prompt).text
