@@ -1,21 +1,32 @@
 import google.generativeai as genai
+import streamlit as st
 
-def generate_sql(question, columns):
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+def generate_sql(question, schema):
     prompt = f"""
-You are a SQL generation agent for DuckDB.
+You are an expert business analytics SQL agent.
 
 Table name: sales
 
-Columns:
-{columns}
+Schema:
+{schema}
 
-User question:
+Task:
+Convert the user's business question into one valid DuckDB SQL query.
+
+Rules:
+- Return only SQL.
+- No markdown.
+- No explanation.
+- Use only columns from the schema.
+- Prefer aggregation when needed.
+- Limit results to 20 rows unless the user asks otherwise.
+
+Question:
 {question}
-
-Generate ONE safe DuckDB SQL query only.
-Do not use DROP, DELETE, UPDATE, INSERT, ALTER.
-Return SQL only. No explanation.
 """
 
-    response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
-    return response.text.replace("```sql", "").replace("```", "").strip()
+    response = model.generate_content(prompt)
+    return response.text.strip().replace("```sql", "").replace("```", "")
